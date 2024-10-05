@@ -1,16 +1,17 @@
 var trace1 = {
-  x: [1, 2, 3, 4],
+  x: [2019, 2020, 2021, 2022],
   y: [10, 15, 13, 17],
-  type: 'scatter'
+  mode: 'lines+markers'
 };
 
 var trace2 = {
-  x: [1, 2, 3, 4],
+  x: [2019, 2020, 2021, 2022],
   y: [16, 5, 11, 9],
-  type: 'scatter'
+  mode: 'lines+markers'
 };
 
 var layout = {
+  hovermode:  false, // para activar o desactivar el overmoause
   showlegend: false,
   height: 600,
   width: 600,
@@ -18,6 +19,7 @@ var layout = {
     showline: true,
     showgrid: false,
     showticklabels: true,
+    fixedrange: true,
     linecolor: 'rgb(204,204,204)',
     linewidth: 2,
     autotick: false,
@@ -35,6 +37,7 @@ var layout = {
     showgrid: false,
     zeroline: false,
     showline: true,
+    fixedrange: true,
     showticklabels: true
   },
   autosize: false,
@@ -80,6 +83,6 @@ var layout = {
 
 var data = [trace1, trace2];
 
-Plotly.newPlot('myDiv', data, layout);
+Plotly.newPlot('myDiv', data, layout, {displayModeBar: false},  {scrollZoom: false});
 
 
