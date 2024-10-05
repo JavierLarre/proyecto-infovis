@@ -94,7 +94,13 @@ async function procesarDatos() {
           zeroline: false,
           showline: true,
           fixedrange: true,
-          showticklabels: true
+          showticklabels: true,
+          linecolor: 'rgb(204,204,204)',
+          tickfont: {
+            family: 'Arial',
+            size: 12,
+            color: 'rgb(82, 82, 82)'
+        }
       },
       autosize: false,
       margin: {
