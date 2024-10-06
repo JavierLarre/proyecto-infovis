@@ -14,13 +14,13 @@ async function procesarDatos() {
 
   rows.forEach(row => {
       // Verificar separador ';' o ','
-      const separator = row.includes(';') ? ';' : ',';
-      const cols = row.split(separator);
+      //const separator = row.includes(';') ? ';' : ',';
+      const cols = row.split(',');
       
       year.push(parseFloat(cols[0]));
 
-      veloz_baja.push(((parseFloat(cols[1])*100)/parseFloat(cols[3]))*100);
-      veloz_alta.push(((parseFloat(cols[2])*100)/parseFloat(cols[3]))*100);
+      veloz_baja.push(((parseFloat(cols[1])*100)/parseFloat(cols[3])));
+      veloz_alta.push(((parseFloat(cols[2])*100)/parseFloat(cols[3])));
       total_conx.push(parseFloat(cols[3]));
   });
 
@@ -33,13 +33,15 @@ async function procesarDatos() {
 
   const ano = [];
   const users_mill = [];
+  const total_pob = []
 
   rows_2.forEach(row => {
-      const separator = row.includes(';') ? ';' : ',';
-      const cols = row.split(separator);
+      const separator = row.includes(',') ? ';' : ',';
+      const cols = row.split(',');
       
       ano.push(parseFloat(cols[0]));
-      users_mill.push(parseFloat(cols[1]));
+      users_mill.push((parseFloat(cols[1])*100)/(parseFloat(cols[3])/1000000));
+      total_pob.push(parseFloat(cols[3]));
   });
 
   // Coloco la data de VELOCIDAD INTERNET en variables para plotly
@@ -47,14 +49,14 @@ async function procesarDatos() {
       x: year,
       y: veloz_baja,
       mode: 'lines+markers',
-      name: 'Velocidad Baja'
+      name: 'Internet entre 10 y 100 Mbps'
   };
 
   const trace_data_rapida = {
       x: year,
       y: veloz_alta,
       mode: 'lines+markers',
-      name: 'Velocidad Alta'
+      name: 'Internet entre 100 Mbps y 1Gbps'
   };
 
   // COLOCO la data de REDES SOCIALES en variables para plotly
@@ -62,15 +64,22 @@ async function procesarDatos() {
       x: ano,
       y: users_mill,
       mode: 'lines+markers',
-      name: 'Usuarios en Redes Sociales (millones)'
+      name: 'Porcentaje Usuarios en Redes Sociales'
   };
 
   // Configuración del layout
   var layout = {
       hovermode: false, // para activar o desactivar el overmouse
       showlegend: true,
-      height: 600,
-      width: 600,
+      legend: {
+        x: 1.05, // Posición de la leyenda en el eje X (al lado derecho)
+        y: 1,    // Posición de la leyenda en el eje Y (en la parte superior)
+        bgcolor: 'rgba(255, 255, 255, 0.5)', // Fondo de la leyenda con algo de transparencia
+        bordercolor: 'rgba(0, 0, 0, 0)', // Color del borde de la leyenda
+        borderwidth: 2 // Grosor del borde
+      },
+      height: 700,
+      width: 1000,
       xaxis: {
           showline: true,
           showgrid: false,
@@ -100,15 +109,16 @@ async function procesarDatos() {
             family: 'Arial',
             size: 12,
             color: 'rgb(82, 82, 82)'
-        }
+        },
+        
       },
       autosize: false,
       margin: {
-          autoexpand: false,
-          l: 100,
-          r: 20,
-          t: 100
-      },
+        l: 100, // Espacio a la izquierda
+        r: 150, // Aumentar margen a la derecha para la leyenda
+        t: 100, // Espacio arriba
+        b: 100  // Espacio abajo
+    },
       annotations: [
           {
               xref: 'paper',
@@ -117,7 +127,7 @@ async function procesarDatos() {
               y: 1.05,
               xanchor: 'left',
               yanchor: 'bottom',
-              text: 'Main Source for News',
+              text: 'Relación Velocidad Intenet y Usuarios con RRSS',
               font:{
                   family: 'Arial',
                   size: 30,
@@ -132,7 +142,7 @@ async function procesarDatos() {
               y: -0.1,
               xanchor: 'center',
               yanchor: 'top',
-              text: 'Source: Pew Research Center & Storytelling with data',
+              text: 'Datos: Statista & Subtel',
               showarrow: false,
               font: {
                   family: 'Arial',
