@@ -1,27 +1,26 @@
 datos = [
-    1695034, 
-    1819564, 
-    2025042, 
-    2186173,
-    2309572, 
-    2501356, 
-    2729251, 
-    2912133, 
-    3068528, 
-    3256097,
-    3434767, 
-    3802033, 
-    4287491, 
-    4460212, 
-    4524579 
+    17687108,
+    17870124,
+    18083879,
+    18368577,
+    18701450,
+    19039485,
+    19300315,
+    19493184,
+    19603733,
+    19629590,
 ]
 
-with open("data/velocidad_internet.csv", "r") as file:
-    lines = [line.strip() for line in file.readlines()]
-    for i, line in enumerate(lines):
-        if i == 0:
-            continue
-        lines[i] += f"{datos[i-1]}\n"
+file_path = 'data/redes_sociales.csv'
 
-with open("data/velocidad_internet.csv", "w") as file:
+with open(file_path, "r") as file:
+    lines = [line.strip() for line in file.readlines()]
+
+for i, line in enumerate(lines):
+    if i == 0:
+        lines[i] += ",Poblacion total en Chile\n"
+        continue
+    lines[i] += f",{datos[i-1]}\n"
+
+with open(file_path, "w") as file:
     file.writelines(lines)
