@@ -83,14 +83,14 @@ async function procesarDatos() {
     };
 
     // COLOCO la data de TOTAL CONEXIONES FIJAS en variables para plotly
-    const trace_total_internet = {
+/*     const trace_total_internet = {
         x: year,
         y: total_conx,
         mode: 'lines+markers',
         name: 'Internet Fijo',
         line: { color: 'purple', width: 2 }
     };
-
+ */
     const trace_total_internet_movil = {
         x: year,
         y: velocidad_movil,
@@ -100,9 +100,30 @@ async function procesarDatos() {
     };
 
     // Se agregan los datos a Plotly
-    const traces = [ trace_redes_sociales, trace_total_internet, trace_total_internet_movil];
+    const traces = [ trace_redes_sociales, trace_total_internet_movil];
 
     const annotations = [
+        {
+            x: 2014.05, // Valor en el eje X donde se colocará la anotación
+            y: 58, // Valor en el eje Y donde se colocará la anotación
+            xref: 'x',
+            yref: 'y',
+            text: 'Quiebre nivel de usuarios', // Texto que aparecerá en el recuadro
+            showarrow: true, // Muestra la flecha que apunta al punto
+            arrowhead: 2, // Tipo de flecha
+            ax: 50, // Desplazamiento horizontal de la anotación (en píxeles)
+            ay: 50, // Desplazamiento vertical de la anotación (en píxeles)
+            bordercolor: 'black', // Color del borde del recuadro
+            borderwidth: 1,
+            borderpad: 5,
+            bgcolor: 'rgba(255, 255, 255, 0.9)', // Color de fondo del recuadro
+            opacity: 0.8,
+            font: {
+                family: 'Arial',
+                size: 12,
+                color: 'black'
+            }
+        },
         {
             xref: 'paper',
             yref: 'paper',
@@ -136,7 +157,7 @@ async function procesarDatos() {
         {
             xref: 'paper',
             yref: 'y',
-            x: - 0.1,
+            x: -0.1,
             y: 58,
             xanchor: 'center',
             yanchor: 'middle',
@@ -148,7 +169,8 @@ async function procesarDatos() {
             },
             showarrow: false,
             textangle: -90 // Rotar el texto para que esté en vertical
-        }
+        },
+        
 
     ];
 
@@ -224,7 +246,7 @@ async function procesarDatos() {
         },
         annotations: annotations
     }
-    var data = [ trace_redes_sociales, trace_total_internet, trace_total_internet_movil];
+    var data = [ trace_redes_sociales, trace_total_internet_movil];
     Plotly.newPlot('myDiv', data, layout, { displayModeBar: false }, { scrollZoom: false });
 }
 
