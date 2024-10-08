@@ -32,12 +32,14 @@ async function procesarDatos() {
 
     const year_3 = [];
     const velocidad_movil = [];
+    const cant_smarphones = []
 
     rows_3.forEach(rows => {
         const cols = rows.split(',');
         year_3.push(parseFloat(cols[0]));
-        velocidad_movil.push((parseFloat(cols[1]) * 100) / parseFloat(cols[2]))
+        velocidad_movil.push((parseFloat(cols[1]) * 100) / parseFloat(cols[2]));
         console.log((parseFloat(cols[1]) * 100) / parseFloat(cols[2]));
+        cant_smarphones.push(cols[3]);
     });
     
 
@@ -78,7 +80,7 @@ async function procesarDatos() {
         x: ano,
         y: users_mill,
         mode: 'lines+markers',
-        name: 'Redes Sociales',
+        name: 'Personas con <br>Redes Sociales',
         line: { color: 'green', width: 2 }
     };
 
@@ -93,9 +95,9 @@ async function procesarDatos() {
  */
     const trace_total_internet_movil = {
         x: year,
-        y: velocidad_movil,
+        y: cant_smarphones,
         mode: 'lines+markers',
-        name: 'Internet Movil',
+        name: 'Conexiones <br> Internet Movil',
         line: { color: 'orange', width: 2 }
     };
 
@@ -104,15 +106,15 @@ async function procesarDatos() {
 
     const annotations = [
         {
-            x: 2014.5, // Valor en el eje X donde se colocará la anotación
-            y: 58, // Valor en el eje Y donde se colocará la anotación
+            x: 2022, // Valor en el eje X donde se colocará la anotación
+            y: 90, // Valor en el eje Y donde se colocará la anotación
             xref: 'x',
             yref: 'y',
             text: 'Quiebre nivel de usuarios', // Texto que aparecerá en el recuadro
             showarrow: true, // Muestra la flecha que apunta al punto
             arrowhead: 2, // Tipo de flecha
             ax: 50, // Desplazamiento horizontal de la anotación (en píxeles)
-            ay: 50, // Desplazamiento vertical de la anotación (en píxeles)
+            ay: 60, // Desplazamiento vertical de la anotación (en píxeles)
             bordercolor: 'black', // Color del borde del recuadro
             borderwidth: 1,
             borderpad: 5,
@@ -161,7 +163,7 @@ async function procesarDatos() {
             y: 58,
             xanchor: 'center',
             yanchor: 'middle',
-            text: 'Porcentaje de Usuarios',
+            text: 'Porcentaje',
             font: {
                 family: 'Arial',
                 size: 14,
@@ -235,7 +237,7 @@ async function procesarDatos() {
                 color: 'rgb(82, 82, 82)'
             
             },
-            range: [0, 120],
+            range: [0, 100],
         },
         autosize: false,
         margin: {
