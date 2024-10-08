@@ -78,7 +78,8 @@ async function procesarDatos() {
         x: ano,
         y: users_mill,
         mode: 'lines+markers',
-        name: 'Porcentaje Usuarios en Redes Sociales'
+        name: 'Redes Sociales',
+        line: { color: 'green', width: 2 }
     };
 
     // COLOCO la data de TOTAL CONEXIONES FIJAS en variables para plotly
@@ -86,20 +87,91 @@ async function procesarDatos() {
         x: year,
         y: total_conx,
         mode: 'lines+markers',
-        name: 'Porcentaje Usuarios con internet fijo'
+        name: 'Internet Fijo',
+        line: { color: 'purple', width: 2 }
     };
 
     const trace_total_internet_movil = {
         x: year,
         y: velocidad_movil,
         mode: 'lines+markers',
-        name: 'Porcentaje Usuarios con internet movil'
+        name: 'Internet Movil',
+        line: { color: 'orange', width: 2 }
     };
+
+    // Se agregan los datos a Plotly
+    const traces = [ trace_redes_sociales, trace_total_internet, trace_total_internet_movil];
+
+    const annotations = [
+        {
+            xref: 'paper',
+            yref: 'paper',
+            x: 0.0,
+            y: 1.05,
+            xanchor: 'left',
+            yanchor: 'bottom',
+            text: 'Relación Velocidad Internet y Usuarios con RRSS',
+            font: {
+                family: 'Arial',
+                size: 30,
+                color: 'rgb(37,37,37)'
+            },
+            showarrow: false
+        },
+        {
+            xref: 'paper',
+            yref: 'paper',
+            x: 0.5,
+            y: -0.1,
+            xanchor: 'center',
+            yanchor: 'top',
+            text: 'Datos: Statista & Subtel',
+            showarrow: false,
+            font: {
+                family: 'Arial',
+                size: 12,
+                color: 'rgb(150,150,150)'
+            }
+        },
+        {
+            xref: 'paper',
+            yref: 'y',
+            x: - 0.1,
+            y: 58,
+            xanchor: 'center',
+            yanchor: 'middle',
+            text: 'Porcentaje de Usuarios',
+            font: {
+                family: 'Arial',
+                size: 14,
+                color: 'rgb(82, 82, 82)'
+            },
+            showarrow: false,
+            textangle: -90 // Rotar el texto para que esté en vertical
+        }
+
+    ];
+
+    traces.forEach(trace => {
+        annotations.push({
+            x: trace.x[trace.x.length - 1], // Último valor en el eje X
+            y: trace.y[trace.y.length - 1], // Último valor en el eje Y
+            xanchor: 'left',
+            yanchor: 'middle',
+            text: trace.name,
+            font: {
+                family: 'Trebuchet MS',
+                size: 15,
+                color: trace.line?.color || 'black' // Usa el color de la línea si está definido
+            },
+            showarrow: false
+        });
+    });
 
     // Configuración del layout
     var layout = {
         hovermode: false, 
-        showlegend: true,
+        showlegend: false,
         legend: {
             x: 1.05,
             y: 1,
@@ -125,7 +197,8 @@ async function procesarDatos() {
                 family: 'Arial',
                 size: 12,
                 color: 'rgb(82, 82, 82)'
-            }
+            },
+            range: [2014, 2023]
         },
         yaxis: {
             showgrid: false,
@@ -138,7 +211,9 @@ async function procesarDatos() {
                 family: 'Arial',
                 size: 12,
                 color: 'rgb(82, 82, 82)'
+            
             },
+            range: [0, 120],
         },
         autosize: false,
         margin: {
@@ -147,41 +222,8 @@ async function procesarDatos() {
             t: 100,
             b: 100
         },
-        annotations: [
-            {
-                xref: 'paper',
-                yref: 'paper',
-                x: 0.0,
-                y: 1.05,
-                xanchor: 'left',
-                yanchor: 'bottom',
-                text: 'Relación Velocidad Internet y Usuarios con RRSS',
-                font: {
-                    family: 'Arial',
-                    size: 30,
-                    color: 'rgb(37,37,37)'
-                },
-                showarrow: false
-            },
-            {
-                xref: 'paper',
-                yref: 'paper',
-                x: 0.5,
-                y: -0.1,
-                xanchor: 'center',
-                yanchor: 'top',
-                text: 'Datos: Statista & Subtel',
-                showarrow: false,
-                font: {
-                    family: 'Arial',
-                    size: 12,
-                    color: 'rgb(150,150,150)'
-                }
-            }
-        ]
-    };
-
-    // Se agregan los datos a Plotly
+        annotations: annotations
+    }
     var data = [ trace_redes_sociales, trace_total_internet, trace_total_internet_movil];
     Plotly.newPlot('myDiv', data, layout, { displayModeBar: false }, { scrollZoom: false });
 }
