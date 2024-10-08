@@ -104,7 +104,7 @@ async function procesarDatos() {
 
     const annotations = [
         {
-            x: 2014.05, // Valor en el eje X donde se colocará la anotación
+            x: 2014.5, // Valor en el eje X donde se colocará la anotación
             y: 58, // Valor en el eje Y donde se colocará la anotación
             xref: 'x',
             yref: 'y',
@@ -131,7 +131,7 @@ async function procesarDatos() {
             y: 1.05,
             xanchor: 'left',
             yanchor: 'bottom',
-            text: 'Relación Velocidad Internet y Usuarios con RRSS',
+            text: 'Personas con Internet Movil v/s Redes Sociales en Chile',
             font: {
                 family: 'Arial',
                 size: 30,
