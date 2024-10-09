@@ -1,29 +1,6 @@
 async function procesarDatos() {
-    // Leo archivo de velocidad internet y saco la data
-    const response = await fetch('data/velocidad_internet.csv');
-    const datos = await response.text();
 
-    // Dividir los datos por líneas
-    const rows = datos.split('\n').slice(1);
-
-    const year = [];
-    const veloz_baja = [];
-    const veloz_alta = [];
-    const total_conx = [];
-    const total_pobl = [];
-
-    rows.forEach(row => {
-        const cols = row.split(',');
-        year.push(parseFloat(cols[0]));
-
-        veloz_baja.push(((parseFloat(cols[1]) * 100) / parseFloat(cols[3])));
-        veloz_alta.push(((parseFloat(cols[2]) * 100) / parseFloat(cols[3])));
-        total_conx.push((parseFloat(cols[3]) * 100) / (parseFloat(cols[4])));
-        total_pobl.push(parseFloat(cols[4]));
-    });
-
-    //leo datos de VELOCIDAD MOVIL
-
+    //leo datos de VELOCIDAD MOVIL y saco la data
     const response_3 = await fetch('data/velocidad_movil.csv');
     const datos_3 = await response_3.text();
 
@@ -36,15 +13,13 @@ async function procesarDatos() {
 
     rows_3.forEach(rows => {
         const cols = rows.split(',');
+
         year_3.push(parseFloat(cols[0]));
         velocidad_movil.push((parseFloat(cols[1]) * 100) / parseFloat(cols[2]));
-        console.log((parseFloat(cols[1]) * 100) / parseFloat(cols[2]));
         cant_smarphones.push(cols[3]);
     });
     
-
-
-    // Leo la data de Redes sociales
+    // Leo la data de Redes sociales y saco la data
     const response_2 = await fetch('data/redes_sociales.csv');
     const datos_2 = await response_2.text();
 
@@ -55,56 +30,41 @@ async function procesarDatos() {
     const users_mill = [];
 
     rows_2.forEach(row => {
-        const cols = row.split(','); // Usar ',' directamente para dividir las columnas
+        const cols = row.split(','); 
         ano.push(parseFloat(cols[0]));
         users_mill.push((parseFloat(cols[1]) * 100) / (parseFloat(cols[3]) / 1000000));
     });
 
-    // Coloco la data de VELOCIDAD INTERNET en variables para plotly
-    const trace_data_lenta = {
-        x: year,
-        y: veloz_baja,
-        mode: 'lines+markers',
-        name: 'Internet entre 10 y 100 Mbps'
-    };
 
-    const trace_data_rapida = {
-        x: year,
-        y: veloz_alta,
-        mode: 'lines+markers',
-        name: 'Internet entre 100 Mbps y 1Gbps'
-    };
-
-    // COLOCO la data de REDES SOCIALES en variables para plotly
+    // COLOCO la data de REDES SOCIALES en variable para plotly con caracteristicas
     const trace_redes_sociales = {
         x: ano,
         y: users_mill,
-        mode: 'lines+markers',
-        name: 'Personas con <br>Redes Sociales',
-        line: { color: 'green', width: 2 }
+        mode: 'lines+markers', // indica que tipo 
+        name: 'Personas con <br>Redes Sociales', //título o nombre del dato
+        line: { color: 'green', width: 2 } // le doy color a la linea y grosor
     };
 
-    // COLOCO la data de TOTAL CONEXIONES FIJAS en variables para plotly
-/*     const trace_total_internet = {
-        x: year,
-        y: total_conx,
-        mode: 'lines+markers',
-        name: 'Internet Fijo',
-        line: { color: 'purple', width: 2 }
-    };
- */
+    // COLOCO la data de INTERNET MOVIL en variable para plotly con caracteristicas
     const trace_total_internet_movil = {
         x: year,
-        y: cant_smarphones,
-        mode: 'lines+markers',
-        name: 'Conexiones <br> Internet Movil',
-        line: { color: 'orange', width: 2 }
+        y: cant_smarphones, // uso la variable de cantidad de smartphones
+        mode: 'lines+markers', // le pongo un modo
+        name: 'Conexiones <br> Internet Movil', // le doy un nombre
+        line: { color: 'orange', width: 2 } // le pongo un color y grosor
     };
 
-    // Se agregan los datos a Plotly
+    // Se agregan los datos a una variable que vamos a iterar para 
+    // poder agregar al final de cada linea del gráfico el titulo o nombre
+    // del dato
+
     const traces = [ trace_redes_sociales, trace_total_internet_movil];
 
+    // creamos una variable anotaciones para agregar recuadros y 
+    // cosas extras al gráfico
     const annotations = [
+
+        // Creamos un cuadro con una notación
         {
             x: 2022, // Valor en el eje X donde se colocará la anotación
             y: 90, // Valor en el eje Y donde se colocará la anotación
@@ -126,6 +86,8 @@ async function procesarDatos() {
                 color: 'black'
             }
         },
+
+        // Agregamos un Título para el Gráfico
         {
             xref: 'paper',
             yref: 'paper',
@@ -141,6 +103,9 @@ async function procesarDatos() {
             },
             showarrow: false
         },
+
+        // Agregamos un comentario con los lugares donde extraimos los datos
+        // al final del gráfico
         {
             xref: 'paper',
             yref: 'paper',
@@ -156,6 +121,8 @@ async function procesarDatos() {
                 color: 'rgb(150,150,150)'
             }
         },
+
+        //Agregamos el texto de forma vertical de "Porcentaje" para el eje Y
         {
             xref: 'paper',
             yref: 'y',
@@ -172,10 +139,9 @@ async function procesarDatos() {
             showarrow: false,
             textangle: -90 // Rotar el texto para que esté en vertical
         },
-        
-
     ];
 
+    //Por cada Trace que creamos, agregamoos al final el nombre y le damos estilo
     traces.forEach(trace => {
         annotations.push({
             x: trace.x[trace.x.length - 1], // Último valor en el eje X
@@ -194,8 +160,10 @@ async function procesarDatos() {
 
     // Configuración del layout
     var layout = {
-        hovermode: false, 
-        showlegend: false,
+        hovermode: false, // para que no muestre las etiquetas interactuables
+        showlegend: false, // para que no muestre la leyenda
+
+        // esto es el estilo de la leyenda
         legend: {
             x: 1.05,
             y: 1,
@@ -205,11 +173,12 @@ async function procesarDatos() {
         },
         height: 700,
         width: 1000,
-        xaxis: {
-            showline: true,
-            showgrid: false,
+        //Damos caracteristicas relevantes al eje X, como estilo y funciones
+        xaxis: { 
+            showline: true, // muestra la linea encima de los años
+            showgrid: false, // muestra la grilla del gráfico
             showticklabels: true,
-            fixedrange: true,
+            fixedrange: true, // para desactivar el ZOOM si es true
             linecolor: 'rgb(204,204,204)',
             linewidth: 2,
             autotick: false,
@@ -222,13 +191,13 @@ async function procesarDatos() {
                 size: 12,
                 color: 'rgb(82, 82, 82)'
             },
-            range: [2014, 2023]
+            range: [2014, 2023] // damos un rango al eje X
         },
         yaxis: {
-            showgrid: false,
+            showgrid: false, // muestra la grilla del gráfico
             zeroline: false,
-            showline: true,
-            fixedrange: true,
+            showline: true, // muestra la linea encima de los años
+            fixedrange: true, // para desactivar el ZOOM si es true
             showticklabels: true,
             linecolor: 'rgb(204,204,204)',
             tickfont: {
@@ -237,7 +206,7 @@ async function procesarDatos() {
                 color: 'rgb(82, 82, 82)'
             
             },
-            range: [0, 100],
+            range: [0, 100], // damos un rango al eje Y
         },
         autosize: false,
         margin: {
@@ -246,10 +215,17 @@ async function procesarDatos() {
             t: 100,
             b: 100
         },
-        annotations: annotations
+        annotations: annotations //Agreamos las anotaciones que hicimos
     }
+
+    // Creamos vaiable para la data que va a recibir Plotly
     var data = [ trace_redes_sociales, trace_total_internet_movil];
+
+    // añadimos los recursos a Plotly y desactivamos funciones para que quede estatico
     Plotly.newPlot('myDiv', data, layout, { displayModeBar: false }, { scrollZoom: false });
+
+    // scrollZoom = para hacer ZOOM con la rueda del mause o los dedos
+    // displayModeBar = barra con muchas opciones
 }
 
 // Llamada a la función
