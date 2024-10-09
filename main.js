@@ -114,7 +114,7 @@ async function procesarDatos() {
             showarrow: true, // Muestra la flecha que apunta al punto
             arrowhead: 2, // Tipo de flecha
             ax: 50, // Desplazamiento horizontal de la anotación (en píxeles)
-            ay: 60, // Desplazamiento vertical de la anotación (en píxeles)
+            ay: 65, // Desplazamiento vertical de la anotación (en píxeles)
             bordercolor: 'black', // Color del borde del recuadro
             borderwidth: 1,
             borderpad: 5,
@@ -133,7 +133,7 @@ async function procesarDatos() {
             y: 1.05,
             xanchor: 'left',
             yanchor: 'bottom',
-            text: 'Personas con Internet Movil v/s Redes Sociales en Chile',
+            text: 'Conexiones a Internet vía smartphone <br> v/s Usuarios con Redes Sociales  en Chile',
             font: {
                 family: 'Arial',
                 size: 30,
