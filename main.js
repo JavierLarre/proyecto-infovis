@@ -40,7 +40,7 @@ async function procesarDatos() {
     const trace_redes_sociales = {
         x: ano,
         y: users_mill,
-        mode: 'lines+markers', // indica que tipo 
+        mode: 'lines', // indica que tipo 
         name: 'Personas con <br>Redes Sociales', //título o nombre del dato
         line: { color: 'green', width: 2 } // le doy color a la linea y grosor
     };
@@ -49,9 +49,9 @@ async function procesarDatos() {
     const trace_total_internet_movil = {
         x: ano,
         y: cant_smarphones, // uso la variable de cantidad de smartphones
-        mode: 'lines+markers', // le pongo un modo
+        mode: 'lines', // le pongo un modo
         name: 'Conexiones <br> Internet Movil', // le doy un nombre
-        line: { color: 'orange', width: 2 } // le pongo un color y grosor
+        line: { color: 'gray', width: 2 } // le pongo un color y grosor
     };
 
     // Se agregan los datos a una variable que vamos a iterar para 
@@ -151,14 +151,14 @@ async function procesarDatos() {
             arrowhead: 2,
             ax: 40,
             ay: -40,
-            bordercolor: 'purple',
+            bordercolor: 'rgba(0, 0, 0, 0)',
             borderwidth: 1,
             borderpad: 4,
-            bgcolor: 'rgba(0, 255, 0, 0.1)',
+            bgcolor: 'rgba(0, 0, 0, 0)',
             font: {
                 family: 'Arial',
                 size: 12,
-                color: 'purple'
+                color: 'gray'
             },
             textangle: -90 // Rotar el texto para que esté en vertical
         },
@@ -174,14 +174,14 @@ async function procesarDatos() {
             arrowhead: 2,
             ax: 0,
             ay: -40,
-            bordercolor: 'red',
+            bordercolor: 'rgba(0, 0, 0, 0)',
             borderwidth: 1,
             borderpad: 4,
-            bgcolor: 'rgba(255, 0, 0, 0.1)',
+            bgcolor: 'rgba(0, 0, 0, 0)',
             font: {
                 family: 'Arial',
                 size: 12,
-                color: 'red'
+                color: 'blue'
             },
             textangle: -90 // Rotar el texto para que esté en vertical
         }
@@ -274,9 +274,9 @@ async function procesarDatos() {
                 xref: 'x',
                 yref: 'y',
                 line: {
-                    color: 'purple',
+                    color: 'gray',
                     width: 2,
-                    dash: 'dashdot'
+                    dash: 'dot'
                 }
             },
             // Línea vertical para el inicio de 5G
@@ -289,9 +289,9 @@ async function procesarDatos() {
                 xref: 'x',
                 yref: 'y',
                 line: {
-                    color: 'red',
+                    color: 'blue',
                     width: 2,
-                    dash: 'dashdot'
+                    dash: 'dot'
                 }
             }
         ],
