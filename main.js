@@ -70,13 +70,13 @@ async function procesarDatos() {
             y: 90, // Valor en el eje Y donde se colocará la anotación
             xref: 'x',
             yref: 'y',
-            text: 'Quiebre nivel de usuarios', // Texto que aparecerá en el recuadro
+            text: 'Quiebre nivel <br> de usuarios', // Texto que aparecerá en el recuadro
             showarrow: true, // Muestra la flecha que apunta al punto
             arrowhead: 2, // Tipo de flecha
-            ax: 50, // Desplazamiento horizontal de la anotación (en píxeles)
-            ay: 65, // Desplazamiento vertical de la anotación (en píxeles)
+            ax: 0, // Desplazamiento horizontal de la anotación (en píxeles)
+            ay: 80, // Desplazamiento vertical de la anotación (en píxeles)
             bordercolor: 'black', // Color del borde del recuadro
-            borderwidth: 1,
+            borderwidth: 2,
             borderpad: 5,
             bgcolor: 'rgba(255, 255, 255, 0.9)', // Color de fondo del recuadro
             opacity: 0.8,
@@ -126,8 +126,8 @@ async function procesarDatos() {
         {
             xref: 'paper',
             yref: 'y',
-            x: -0.1,
-            y: 58,
+            x: -0.05,
+            y: 70,
             xanchor: 'center',
             yanchor: 'middle',
             text: 'Porcentaje',
@@ -139,6 +139,52 @@ async function procesarDatos() {
             showarrow: false,
             textangle: -90 // Rotar el texto para que esté en vertical
         },
+
+        // Anotación para indicar el inicio de 4G
+        {
+            x: 2014.3, // Ajusta el valor según el año en que comenzó el 4G
+            y: 44, // Ajusta la posición vertical
+            xref: 'x',
+            yref: 'y',
+            text: 'Inicio 4G',
+            showarrow: false,
+            arrowhead: 2,
+            ax: 40,
+            ay: -40,
+            bordercolor: 'purple',
+            borderwidth: 1,
+            borderpad: 4,
+            bgcolor: 'rgba(0, 255, 0, 0.1)',
+            font: {
+                family: 'Arial',
+                size: 12,
+                color: 'purple'
+            },
+            textangle: -90 // Rotar el texto para que esté en vertical
+        },
+
+        // Anotación para indicar el inicio de 5G
+        {
+            x: 2021.3, // Ajusta el valor según el año en que comenzó el 5G
+            y: 44, // Ajusta la posición vertical
+            xref: 'x',
+            yref: 'y',
+            text: 'Inicio 5G',
+            showarrow: false,
+            arrowhead: 2,
+            ax: 0,
+            ay: -40,
+            bordercolor: 'red',
+            borderwidth: 1,
+            borderpad: 4,
+            bgcolor: 'rgba(255, 0, 0, 0.1)',
+            font: {
+                family: 'Arial',
+                size: 12,
+                color: 'red'
+            },
+            textangle: -90 // Rotar el texto para que esté en vertical
+        }
     ];
 
     //Por cada Trace que creamos, agregamoos al final el nombre y le damos estilo
@@ -191,7 +237,7 @@ async function procesarDatos() {
                 size: 12,
                 color: 'rgb(82, 82, 82)'
             },
-            range: [2014, 2023] // damos un rango al eje X
+            range: [2013, 2023] // damos un rango al eje X
         },
         yaxis: {
             showgrid: false, // muestra la grilla del gráfico
@@ -206,7 +252,7 @@ async function procesarDatos() {
                 color: 'rgb(82, 82, 82)'
             
             },
-            range: [0, 100], // damos un rango al eje Y
+            range: [40, 100], // damos un rango al eje Y
         },
         autosize: false,
         margin: {
@@ -215,6 +261,41 @@ async function procesarDatos() {
             t: 100,
             b: 100
         },
+
+        // Para añadir lineas verticales 
+        shapes: [
+            // Línea vertical para el inicio de 4G
+            {
+                type: 'line',
+                x0: 2014, // Ajusta el valor según el año en que comenzó el 4G
+                x1: 2014,
+                y0: 0,
+                y1: 100,
+                xref: 'x',
+                yref: 'y',
+                line: {
+                    color: 'purple',
+                    width: 2,
+                    dash: 'dashdot'
+                }
+            },
+            // Línea vertical para el inicio de 5G
+            {
+                type: 'line',
+                x0: 2021, // Ajusta el valor según el año en que comenzó el 5G
+                x1: 2021,
+                y0: 0,
+                y1: 100,
+                xref: 'x',
+                yref: 'y',
+                line: {
+                    color: 'red',
+                    width: 2,
+                    dash: 'dashdot'
+                }
+            }
+        ],
+    
         annotations: annotations //Agreamos las anotaciones que hicimos
     }
 
