@@ -9,7 +9,7 @@ async function procesarDatos() {
 
     const year_3 = [];
     const velocidad_movil = [];
-    const cant_smarphones = []
+    const cant_smarphones = [];
 
     rows_3.forEach(rows => {
         const cols = rows.split(',');
@@ -47,7 +47,7 @@ async function procesarDatos() {
 
     // COLOCO la data de INTERNET MOVIL en variable para plotly con caracteristicas
     const trace_total_internet_movil = {
-        x: year,
+        x: ano,
         y: cant_smarphones, // uso la variable de cantidad de smartphones
         mode: 'lines+markers', // le pongo un modo
         name: 'Conexiones <br> Internet Movil', // le doy un nombre
