@@ -70,13 +70,13 @@ async function procesarDatos() {
             y: 90, // Valor en el eje Y donde se colocará la anotación
             xref: 'x',
             yref: 'y',
-            text: 'Quiebre nivel <br> de usuarios', // Texto que aparecerá en el recuadro
+            text: 'A pesar de que las conexiones por <br> internet Movil no influyen <br> en la cantidad de personas <br> con Redes Sociales y <br> hay mayor velocidad de internet <br> aún se ve un decreciemiento <br> importante aquí ', // Texto que aparecerá en el recuadro
             showarrow: true, // Muestra la flecha que apunta al punto
             arrowhead: 2, // Tipo de flecha
-            ax: 0, // Desplazamiento horizontal de la anotación (en píxeles)
-            ay: 80, // Desplazamiento vertical de la anotación (en píxeles)
+            ax: 40, // Desplazamiento horizontal de la anotación (en píxeles)
+            ay: 150, // Desplazamiento vertical de la anotación (en píxeles)
             bordercolor: 'black', // Color del borde del recuadro
-            borderwidth: 2,
+            borderwidth: 1,
             borderpad: 5,
             bgcolor: 'rgba(255, 255, 255, 0.9)', // Color de fondo del recuadro
             opacity: 0.8,
