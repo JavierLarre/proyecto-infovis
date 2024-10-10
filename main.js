@@ -1,5 +1,10 @@
 import { plotData } from "./plot_data/plot.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+async function procesarDatos() {
+    
     plotData();
-});
+    
+}
+
+// Llamada a la función
+procesarDatos();
