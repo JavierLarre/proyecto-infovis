@@ -1,9 +1,9 @@
 // plot.js
-import { layout } from './layout.js';
 import { data } from './data.js';
+import { layout } from './layout.js';
 import { annotations } from './annotations.js';
 
-function add_annotations_to_layout() {
+async function add_annotations_to_layout() {
     data.forEach(trace => {
         annotations.push({
             x: trace.x[trace.x.length - 1], // Último valor en el eje X
@@ -22,7 +22,7 @@ function add_annotations_to_layout() {
 layout.annotations = annotations;
 }
 
-export function plotData() {
+export async function plotData() {
 
     add_annotations_to_layout();
 
