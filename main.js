@@ -70,7 +70,7 @@ async function procesarDatos() {
             y: 90, // Valor en el eje Y donde se colocará la anotación
             xref: 'x',
             yref: 'y',
-            text: 'A pesar de que las conexiones por <br> internet Movil no influyen <br> en la cantidad de personas <br> con Redes Sociales y <br> hay mayor velocidad de internet <br> aún se ve un decreciemiento <br> importante a partir de este punto ', // Texto que aparecerá en el recuadro
+            text: 'La cantidad de usuarios <br> en redes sociales <br> disminuye a pesar de <br> la disponibilidad de mejores <br> velocidades de internet.', // Texto que aparecerá en el recuadro
             showarrow: true, // Muestra la flecha que apunta al punto
             arrowhead: 2, // Tipo de flecha
             ax: 40, // Desplazamiento horizontal de la anotación (en píxeles)
