@@ -1,0 +1,7 @@
+.center-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh; /* Adjust as needed */
+    width: 250vh; /* Adjust as needed */
+}

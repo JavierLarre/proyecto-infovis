@@ -4,15 +4,15 @@ export const annotations = [
 
     // Creamos un cuadro con una notación
     {
-        x: 2022, // Valor en el eje X donde se colocará la anotación
-        y: 90, // Valor en el eje Y donde se colocará la anotación
+        x: 2022.5, // Valor en el eje X donde se colocará la anotación
+        y: 85, // Valor en el eje Y donde se colocará la anotación
         xref: 'x',
         yref: 'y',
-        text: 'Quiebre nivel de usuarios', // Texto que aparecerá en el recuadro
+        text: 'La cantidad de usuarios <br> en redes sociales <br> <b><u>disminuye</u></b> a pesar de <br> la disponibilidad de mejores <br> velocidades de internet', // Texto que aparecerá en el recuadro
         showarrow: true, // Muestra la flecha que apunta al punto
         arrowhead: 2, // Tipo de flecha
-        ax: 50, // Desplazamiento horizontal de la anotación (en píxeles)
-        ay: 65, // Desplazamiento vertical de la anotación (en píxeles)
+        ax: -20, // Desplazamiento horizontal de la anotación (en píxeles)
+        ay: 100, // Desplazamiento vertical de la anotación (en píxeles)
         bordercolor: 'black', // Color del borde del recuadro
         borderwidth: 1,
         borderpad: 5,
@@ -20,7 +20,7 @@ export const annotations = [
         opacity: 0.8,
         font: {
             family: 'Arial',
-            size: 12,
+            size: 16,
             color: 'black'
         }
     },
