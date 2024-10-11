@@ -3,7 +3,7 @@ async function read_file(path) {
     return (await response.text()).split('\n').slice(1);
 }
 
-var rows = await read_file('../data/redes_sociales.csv');
+var rows = await read_file('data/redes_sociales.csv');
 const ano = [];
 const users_mill = [];
 
@@ -24,7 +24,7 @@ export const trace_redes_sociales = {
 };
 
 
-rows = await read_file('../data/velocidad_movil.csv');
+rows = await read_file('data/velocidad_movil.csv');
 const velocidad_movil = [];
 const cant_smarphones = [];
 
