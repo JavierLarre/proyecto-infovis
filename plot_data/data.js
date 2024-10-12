@@ -44,7 +44,7 @@ export const trace_total_internet_movil = {
     y: cant_smarphones, // uso la variable de cantidad de smartphones
     mode: 'lines+markers', // le pongo un modo
     name: 'Conexiones <br> Internet Movil', // le doy un nombre
-    line: { color: 'orange', width: 2 } // le pongo un color y grosor
+    line: { color: 'gray', width: 2 } // le pongo un color y grosor
 };
 
 // Se agregan los datos a una variable que vamos a iterar para 
