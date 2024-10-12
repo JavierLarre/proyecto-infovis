@@ -4,15 +4,21 @@ const comentario_usuarios = {
     y: 87, // Valor en el eje Y donde se colocará la anotación
     xref: 'x',
     yref: 'y',
-    text: 'La cantidad de usuarios <br> en redes sociales <br> <b><u>disminuye</u></b> a pesar de <br> la disponibilidad de mejores <br> velocidades de internet', // Texto que aparecerá en el recuadro
+    text: `
+    La cantidad de usuarios en redes sociales <br>
+    <b><u>disminuye</u></b> a pesar de la disponibilidad de  <br>
+    mejores velocidades de internet. <br>
+    <b>Sin embargo</b>, las conexiones móviles  <br>
+    se han mantenido estables y constantes.
+    `,
     showarrow: true, // Muestra la flecha que apunta al punto
     arrowhead: 2, // Tipo de flecha
-    ax: -5, // Desplazamiento horizontal de la anotación (en píxeles)
-    ay: 100, // Desplazamiento vertical de la anotación (en píxeles)
+    ax: 30, // Desplazamiento horizontal de la anotación (en píxeles)
+    ay: 200, // Desplazamiento vertical de la anotación (en píxeles)
     bordercolor: 'black', // Color del borde del recuadro
-    borderwidth: 1,
+    borderwidth: 0,
     borderpad: 5,
-    bgcolor: 'rgba(255, 255, 255, 0.9)', // Color de fondo del recuadro
+    bgcolor: 'rgba(255, 255, 255, 0)', // Color de fondo del recuadro
     opacity: 0.8,
     font: {
         family: 'Arial',
@@ -21,14 +27,38 @@ const comentario_usuarios = {
     }
 }
 
+// const comentario_conexiones = {
+//     x: 2022.7, // Valor en el eje X donde se colocará la anotación
+//     y: 45, // Valor en el eje Y donde se colocará la anotación
+//     xref: 'x',
+//     yref: 'y',
+//     text: '<u>No obstante</u>, las conexiones <br> moviles se han mantenido  <br>estables y constantes', // Texto que aparecerá en el recuadro
+//     showarrow: false, // Muestra la flecha que apunta al punto
+//     bordercolor: 'black', // Color del borde del recuadro
+//     borderwidth: 1,
+//     borderpad: 5,
+//     bgcolor: 'rgba(255, 255, 255, 0.9)', // Color de fondo del recuadro
+//     opacity: 0.8,
+//     font: {
+//         family: 'Arial',
+//         size: 13,
+//         color: 'black'
+//     }
+// }
+
+
+
 const titulo = {
     xref: 'paper',
     yref: 'paper',
-    x: 0.15,
+    x: 0.01,
     y: 1.05,
     xanchor: 'left',
     yanchor: 'bottom',
-    text: 'Conexiones a Internet vía smartphone <br> v/s Usuarios con Redes Sociales  en Chile',
+    text: `
+    Estabilidad de conexiones móviles <br>
+    vs. cantidad de usuarios en Redes Sociales en Chile
+    `,
     font: {
         family: 'Arial',
         size: 30,
@@ -71,8 +101,8 @@ const porcentaje = {
 }
 
 const label_4g = {
-    x: 2014.3, // Ajusta el valor según el año en que comenzó el 4G
-    y: 44, // Ajusta la posición vertical
+    x: 2014.2, // Ajusta el valor según el año en que comenzó el 4G
+    y: 8, // Ajusta la posición vertical
     xref: 'x',
     yref: 'y',
     text: 'Inicio 4G',
@@ -93,8 +123,8 @@ const label_4g = {
 }
 
 const label_5g = {
-    x: 2021.3, // Ajusta el valor según el año en que comenzó el 5G
-    y: 44, // Ajusta la posición vertical
+    x: 2021.2, // Ajusta el valor según el año en que comenzó el 5G
+    y: 8, // Ajusta la posición vertical
     xref: 'x',
     yref: 'y',
     text: 'Inicio 5G',
