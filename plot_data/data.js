@@ -18,7 +18,7 @@ rows.forEach(row => {
 export const trace_redes_sociales = {
     x: ano,
     y: users_mill,
-    mode: 'lines+markers', // indica que tipo 
+    mode: 'lines', // indica que tipo 
     name: 'Personas con <br>Redes Sociales', //título o nombre del dato
     line: { color: 'green', width: 2 } // le doy color a la linea y grosor
 };
@@ -42,7 +42,7 @@ rows.forEach(rows => {
 export const trace_total_internet_movil = {
     x: ano,
     y: cant_smarphones, // uso la variable de cantidad de smartphones
-    mode: 'lines+markers', // le pongo un modo
+    mode: 'lines', // le pongo un modo
     name: 'Conexiones <br> Internet Movil', // le doy un nombre
     line: { color: 'gray', width: 2 } // le pongo un color y grosor
 };
