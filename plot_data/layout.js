@@ -1,7 +1,7 @@
 
 // Configuración del layout
 export const layout = {
-    hovermode: false, // para que no muestre las etiquetas interactuables
+    hovermode: true, // para que no muestre las etiquetas interactuables
     showlegend: false, // para que no muestre la leyenda
 
     // esto es el estilo de la leyenda

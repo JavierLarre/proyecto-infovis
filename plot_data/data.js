@@ -20,7 +20,8 @@ export const trace_redes_sociales = {
     y: users_mill,
     mode: 'lines', // indica que tipo 
     name: 'Personas con <br>Redes Sociales', //título o nombre del dato
-    line: { color: 'green', width: 2 } // le doy color a la linea y grosor
+    line: { color: 'green', width: 2 }, // le doy color a la linea y grosor
+    hovertemplate: 'Año: %{x}<br>Personas: %{y:.2f}<extra></extra>'
 };
 
 
@@ -44,7 +45,8 @@ export const trace_total_internet_movil = {
     y: cant_smarphones, // uso la variable de cantidad de smartphones
     mode: 'lines', // le pongo un modo
     name: 'Conexiones <br> Internet Movil', // le doy un nombre
-    line: { color: 'gray', width: 2 } // le pongo un color y grosor
+    line: { color: 'gray', width: 2 }, // le pongo un color y grosor
+    hovertemplate: 'Año: %{x}<br>Personas: %{y:.2f}<extra></extra>'
 };
 
 // Se agregan los datos a una variable que vamos a iterar para 
@@ -71,3 +73,4 @@ export const traces = [trace_redes_sociales, trace_total_internet_movil];
 
 // Creamos vaiable para la data que va a recibir Plotly
 export const data = [trace_redes_sociales, trace_total_internet_movil];
+
