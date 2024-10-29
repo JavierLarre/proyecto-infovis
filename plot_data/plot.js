@@ -25,6 +25,35 @@ function add_annotations_and_images_to_layout() {
     layout.annotations = annotations;
 }
 
+
+const imageUrls = [
+    // Imágenes para el primer trace (trace 0)
+    ["imagenes/twitterX.png",
+        "imagenes/Instagram_logo_2022.svg.png",
+        "imagenes/google-plus-logo.png",
+        "imagenes/google-plus-logo.png",
+        "imagenes/Instagram_logo_2022.svg.png",
+        "imagenes/twitterX.png",
+        "imagenes/google-plus-logo.png",
+        "imagenes/Instagram_logo_2022.svg.png",
+        "imagenes/google-plus-logo.png",
+        "imagenes/google-plus-logo.png"
+    ],
+    
+    // Imágenes para el segundo trace (trace 1)
+    ["imagenes/twitterX.png",
+        "imagenes/Instagram_logo_2022.svg.png",
+        "imagenes/google-plus-logo.png",
+        "imagenes/twitterX.png",
+        "imagenes/google-plus-logo.png",
+        "imagenes/google-plus-logo.png",
+        "imagenes/Los-gatos-tienen-casi-300-expresiones-faciales.jpg",
+        "imagenes/google-plus-logo.png",
+        "imagenes/twitterX.png",
+        "imagenes/twitterX.png"
+    ],
+];
+
 export function plotData() {
     // Inicializar layout.images como array vacío si no está definido
     layout.images = layout.images || [];
@@ -41,15 +70,17 @@ export function plotData() {
         { displayModeBar: false, scrollZoom: true }
     );
 
-    // Evento de hover para mostrar la imagen
+    // Evento de hover para mostrar la imagen correspondiente al trace y punto
     document.getElementById('myDiv').on('plotly_hover', function(eventData) {
         const point = eventData.points[0];
+        const traceIndex = point.curveNumber;  // Índice del trace
+        const pointIndex = point.pointIndex;   // Índice del punto dentro del trace
         const xValue = point.x;
         const yValue = point.y;
 
-        // Declarar hoverImage y asignar propiedades de imagen
+        // Usar la URL de imagen correspondiente al trace y punto actual
         let hoverImage = {
-            source: "imagenes/Los-gatos-tienen-casi-300-expresiones-faciales.jpg",
+            source: imageUrls[traceIndex][pointIndex],  // Selecciona la imagen según el trace y el punto
             x: xValue,
             y: yValue - 8,
             sizex: 10,
