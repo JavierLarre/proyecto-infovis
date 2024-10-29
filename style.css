@@ -5,3 +5,11 @@
     height: 90vh; /* Adjust as needed */
     width: 250vh; /* Adjust as needed */
 }
+
+.image-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 0vh; /* Adjust as needed */
+    width: 0vh; /* Adjust as needed */
+}

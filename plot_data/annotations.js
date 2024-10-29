@@ -143,7 +143,6 @@ const label_5g = {
     },
     textangle: -90 // Rotar el texto para que esté en vertical
 }
-
 // creamos una variable anotaciones para agregar recuadros y 
 // cosas extras al gráfico
 export const annotations = [

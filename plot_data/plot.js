@@ -3,62 +3,72 @@ import { data } from './data.js';
 import { layout } from './layout.js';
 import { annotations } from './annotations.js';
 
-function add_annotations_to_layout() {
+function add_annotations_and_images_to_layout() {
     data.forEach(trace => {
+        // Agregar anotación para el nombre de la línea
         annotations.push({
             x: trace.x[trace.x.length - 1], // Último valor en el eje X
             y: trace.y[trace.y.length - 1], // Último valor en el eje Y
             xanchor: 'left',
             yanchor: 'middle',
-            label: 'User Probar',
             text: trace.name,
             font: {
                 family: 'Trebuchet MS',
                 size: 15,
-            color: trace.line?.color || 'black' // Usa el color de la línea si está definido
-        },
-        showarrow: false
+                color: trace.line?.color || 'black' // Usa el color de la línea si está definido
+            },
+            showarrow: false
+        });
     });
-});
-layout.annotations = annotations;
+
+    // Actualizar el layout con las anotaciones
+    layout.annotations = annotations;
 }
 
-
-
 export function plotData() {
+    // Inicializar layout.images como array vacío si no está definido
+    layout.images = layout.images || [];
 
-    
-    // Agregar un evento de hover al gráfico
-    var divImage = document.getElementById("tooltipImageDiv"); // Un div en HTML que actúa como tooltip
-    var imgElement = document.createElement("img");
-    imgElement.src = "imagenes/Los-gatos-tienen-casi-300-expresiones-faciales.jpg";
-    imgElement.style.width = "50px";
-    imgElement.style.height = "50px";
-    divImage.appendChild(imgElement);
-    add_annotations_to_layout();
+    // Llamar a la función para agregar anotaciones
+    add_annotations_and_images_to_layout();
 
-    // añadimos los recursos a Plotly y desactivamos funciones para que quede estatico
+    // Renderizar el gráfico
     const div = 'myDiv';
     Plotly.newPlot(
         div,
         data,
         layout,
-        { displayModeBar: false },
-        { scrollZoom: true }
+        { displayModeBar: false, scrollZoom: true }
     );
 
-    // scrollZoom = para hacer ZOOM con la rueda del mause o los dedos
-    // displayModeBar = barra con muchas opciones
-
+    // Evento de hover para mostrar la imagen
     document.getElementById('myDiv').on('plotly_hover', function(eventData) {
-        // Posicionar y mostrar el div
-        divImage.style.left = eventData.event.x + 'px';
-        divImage.style.top = eventData.event.y + 'px';
-        divImage.style.display = 'block';
+        const point = eventData.points[0];
+        const xValue = point.x;
+        const yValue = point.y;
+
+        // Declarar hoverImage y asignar propiedades de imagen
+        let hoverImage = {
+            source: "imagenes/Los-gatos-tienen-casi-300-expresiones-faciales.jpg",
+            x: xValue,
+            y: yValue - 8,
+            sizex: 10,
+            sizey: 10,
+            xanchor: "center",
+            yanchor: "middle",
+            xref: "x",
+            yref: "y"
+        };
+
+        // Agregar la imagen al layout y actualizar el gráfico
+        layout.images = [hoverImage];
+        Plotly.relayout('myDiv', { images: layout.images });
     });
 
+    // Evento de unhover para ocultar la imagen
     document.getElementById('myDiv').on('plotly_unhover', function() {
-        // Ocultar el div cuando no esté en hover
-        divImage.style.display = 'none';
+        // Limpiar las imágenes en el layout y actualizar
+        layout.images = [];
+        Plotly.relayout('myDiv', { images: layout.images });
     });
 }
