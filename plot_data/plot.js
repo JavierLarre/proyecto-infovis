@@ -2,7 +2,7 @@ import { data } from './data.js';
 import { layout } from './layout.js';
 import { annotations } from './annotations.js';
 
-// Inicializar un sintetizador (opcional)
+// Inicializar un sintetizador
 const synth = new Tone.Synth({
     oscillator: {
         type: "sine", // Cambia a "square", "triangle", "sawtooth", etc. si prefieres otro tipo
@@ -15,13 +15,6 @@ const synth = new Tone.Synth({
     }
 }).toDestination();
 synth.volume.value = -10; // Ajustar volumen inicial
-
-// Opción alternativa: usar un archivo de sonido
-const soundUrl = 'sonidos/alert.wav'; // Cambia esto a la ruta de tu sonido
-const player = new Tone.Player(soundUrl, {
-    loop: false, // Si deseas que el sonido no se repita
-}).toDestination();
-player.volume.value = -10; // Ajustar volumen inicial
 
 function add_annotations_and_images_to_layout() {
     data.forEach(trace => {
@@ -114,21 +107,18 @@ export function plotData() {
         layout.images = [hoverImage];
         Plotly.relayout('myDiv', { images: layout.images });
 
-        // Reproducir el sonido
-        player.start(); // Reproduce el sonido
-        // Alternativamente, si prefieres usar el sintetizador:
-        // synth.triggerAttackRelease("C4", "8n"); // Cambia "C4" y "8n" según tu preferencia
+        // Cambiar la frecuencia del sintetizador basado en el valor Y
+        const frequency = Math.max(200, Math.min(1000, yValue * 2)); // Ajustar el rango de frecuencia
+        synth.triggerAttack(frequency); // Comienza a reproducir el sonido a la frecuencia ajustada
     });
 
-    // Evento de unhover para ocultar la imagen y detener el sonido
+    // Evento de unhover para ocultar la imagen y liberar el sonido
     document.getElementById('myDiv').on('plotly_unhover', function() {
         // Limpiar las imágenes en el layout y actualizar
         layout.images = [];
         Plotly.relayout('myDiv', { images: layout.images });
 
         // Detener el sonido al dejar de estar sobre la línea
-        player.stop(); // Detiene el sonido
-        // Alternativamente, si usas el sintetizador:
-        // synth.triggerRelease(); // Libera el sintetizador
+        synth.triggerRelease(); // Libera el sintetizador
     });
 }
