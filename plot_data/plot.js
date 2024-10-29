@@ -1,7 +1,11 @@
-// plot.js
 import { data } from './data.js';
 import { layout } from './layout.js';
 import { annotations } from './annotations.js';
+import * as Tone from 'tone'; // Importar Tone.js
+
+// Inicializar un sintetizador
+const synth = new Tone.Synth().toDestination();
+synth.volume.value = -10; // Ajustar volumen inicial
 
 function add_annotations_and_images_to_layout() {
     data.forEach(trace => {
@@ -24,7 +28,6 @@ function add_annotations_and_images_to_layout() {
     // Actualizar el layout con las anotaciones
     layout.annotations = annotations;
 }
-
 
 const imageUrls = [
     // Imágenes para el primer trace (trace 0)
@@ -94,12 +97,19 @@ export function plotData() {
         // Agregar la imagen al layout y actualizar el gráfico
         layout.images = [hoverImage];
         Plotly.relayout('myDiv', { images: layout.images });
+
+        // Reproducir el sonido con una frecuencia ajustada
+        const frequency = 440 + (traceIndex * 100); // Ajustar la frecuencia según el trace
+        synth.triggerAttack(Tone.Frequency(frequency), Tone.now());
     });
 
-    // Evento de unhover para ocultar la imagen
+    // Evento de unhover para ocultar la imagen y detener el sonido
     document.getElementById('myDiv').on('plotly_unhover', function() {
         // Limpiar las imágenes en el layout y actualizar
         layout.images = [];
         Plotly.relayout('myDiv', { images: layout.images });
+
+        // Detener el sonido al dejar de estar sobre la línea
+        synth.triggerRelease(Tone.now());
     });
 }
