@@ -2,39 +2,33 @@ import { data } from './data.js';
 import { layout } from './layout.js';
 import { annotations } from './annotations.js';
 
-// Inicializar un sintetizador
-const synth = new Tone.Synth({
-    oscillator: {
-        type: "sine", // Cambia a "square", "triangle", "sawtooth", etc. si prefieres otro tipo
-    },
-    envelope: {
-        attack: 0.1,
-        decay: 0.2,
-        sustain: 0.7,
-        release: 1,
-    }
-}).toDestination();
-synth.volume.value = -10; // Ajustar volumen inicial
+// Ruta del archivo de sonido personalizado
+const audioFilePath = "sonidos/sonido_prueba.mp3"; // Cambia esta ruta a la de tu archivo de sonido
+
+// Crear un reproductor de audio con Tone.js
+let audioPlayer;
+Tone.loaded().then(() => {
+    audioPlayer = new Tone.Player(audioFilePath).toDestination();
+    audioPlayer.autostart = false;
+    audioPlayer.loop = false;
+});
 
 function add_annotations_and_images_to_layout() {
     data.forEach(trace => {
-        // Agregar anotación para el nombre de la línea
         annotations.push({
-            x: trace.x[trace.x.length - 1], // Último valor en el eje X
-            y: trace.y[trace.y.length - 1], // Último valor en el eje Y
+            x: trace.x[trace.x.length - 1],
+            y: trace.y[trace.y.length - 1],
             xanchor: 'left',
             yanchor: 'middle',
             text: trace.name,
             font: {
                 family: 'Trebuchet MS',
                 size: 15,
-                color: trace.line?.color || 'black' // Usa el color de la línea si está definido
+                color: trace.line?.color || 'black'
             },
             showarrow: false
         });
     });
-
-    // Actualizar el layout con las anotaciones
     layout.annotations = annotations;
 }
 
@@ -67,32 +61,22 @@ const imageUrls = [
 ];
 
 export function plotData() {
-    // Inicializar layout.images como array vacío si no está definido
     layout.images = layout.images || [];
-
-    // Llamar a la función para agregar anotaciones
     add_annotations_and_images_to_layout();
 
-    // Renderizar el gráfico
     const div = 'myDiv';
-    Plotly.newPlot(
-        div,
-        data,
-        layout,
-        { displayModeBar: false, scrollZoom: true }
-    );
+    Plotly.newPlot(div, data, layout, { displayModeBar: false, scrollZoom: true });
 
-    // Evento de hover para mostrar la imagen correspondiente al trace y punto
-    document.getElementById('myDiv').on('plotly_hover', function(eventData) {
+    document.getElementById(div).on('plotly_hover', function(eventData) {
         const point = eventData.points[0];
-        const traceIndex = point.curveNumber;  // Índice del trace
-        const pointIndex = point.pointIndex;   // Índice del punto dentro del trace
+        const traceIndex = point.curveNumber;
+        const pointIndex = point.pointIndex;
         const xValue = point.x;
         const yValue = point.y;
 
-        // Usar la URL de imagen correspondiente al trace y punto actual
+        // Configuración de la imagen de hover
         let hoverImage = {
-            source: imageUrls[traceIndex][pointIndex],  // Selecciona la imagen según el trace y el punto
+            source: imageUrls[traceIndex][pointIndex],
             x: xValue,
             y: yValue - 8,
             sizex: 10,
@@ -103,22 +87,35 @@ export function plotData() {
             yref: "y"
         };
 
-        // Agregar la imagen al layout y actualizar el gráfico
+        // Actualizamos layout.images sin eliminar otras imágenes
         layout.images = [hoverImage];
-        Plotly.relayout('myDiv', { images: layout.images });
+        Plotly.relayout(div, { images: layout.images });
 
-        // Cambiar la frecuencia del sintetizador basado en el valor Y
-        const frequency = Math.max(200, Math.min(1000, yValue * 2)); // Ajustar el rango de frecuencia
-        synth.triggerAttack(frequency); // Comienza a reproducir el sonido a la frecuencia ajustada
+        // Asegurarse de que el contexto de audio esté activado y reproducir el sonido
+        if (Tone.context.state !== 'running') {
+            Tone.context.resume().then(() => {
+                playSound(yValue);
+            });
+        } else {
+            playSound(yValue);
+        }
     });
 
-    // Evento de unhover para ocultar la imagen y liberar el sonido
-    document.getElementById('myDiv').on('plotly_unhover', function() {
-        // Limpiar las imágenes en el layout y actualizar
+    document.getElementById(div).on('plotly_unhover', function() {
+        // Limpiar las imágenes en el layout sin eliminar otras configuraciones
         layout.images = [];
-        Plotly.relayout('myDiv', { images: layout.images });
+        Plotly.relayout(div, { images: layout.images });
 
         // Detener el sonido al dejar de estar sobre la línea
-        synth.triggerRelease(); // Libera el sintetizador
+        if (audioPlayer && audioPlayer.state === "started") {
+            audioPlayer.stop();
+        }
     });
+}
+
+function playSound(yValue) {
+    if (audioPlayer) {
+        audioPlayer.playbackRate = Math.min(2, Math.max(0.5, yValue / 500));
+        audioPlayer.start();
+    }
 }
