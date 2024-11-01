@@ -1,17 +1,18 @@
 import { data } from './data.js';
 import { layout } from './layout.js';
 import { annotations } from './annotations.js';
+import { PlayOnHover, stopSound } from './audio.js'; 
 
 // Ruta del archivo de sonido personalizado
-const audioFilePath = "sonidos/sonido_prueba.mp3"; // Cambia esta ruta a la de tu archivo de sonido
+// const audioFilePath = "sonidos/sonido_prueba.mp3"; // Cambia esta ruta a la de tu archivo de sonido
 
-// Crear un reproductor de audio con Tone.js
-let audioPlayer;
-Tone.loaded().then(() => {
-    audioPlayer = new Tone.Player(audioFilePath).toDestination();
-    audioPlayer.autostart = false;
-    audioPlayer.loop = false;
-});
+// // Crear un reproductor de audio con Tone.js
+// let audioPlayer;
+// Tone.loaded().then(() => {
+//     audioPlayer = new Tone.Player(audioFilePath).toDestination();
+//     audioPlayer.autostart = false;
+//     audioPlayer.loop = false;
+// });
 
 function add_annotations_and_images_to_layout() {
     data.forEach(trace => {
@@ -92,13 +93,7 @@ export function plotData() {
         Plotly.relayout(div, { images: layout.images });
 
         // Asegurarse de que el contexto de audio esté activado y reproducir el sonido
-        if (Tone.context.state !== 'running') {
-            Tone.context.resume().then(() => {
-                playSound(yValue);
-            });
-        } else {
-            playSound(yValue);
-        }
+        PlayOnHover(xValue, yValue);
     });
 
     document.getElementById(div).on('plotly_unhover', function() {
@@ -107,15 +102,6 @@ export function plotData() {
         Plotly.relayout(div, { images: layout.images });
 
         // Detener el sonido al dejar de estar sobre la línea
-        if (audioPlayer && audioPlayer.state === "started") {
-            audioPlayer.stop();
-        }
+        stopSound();
     });
-}
-
-function playSound(yValue) {
-    if (audioPlayer) {
-        audioPlayer.playbackRate = Math.min(2, Math.max(0.5, yValue / 500));
-        audioPlayer.start();
-    }
 }
