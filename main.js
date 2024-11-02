@@ -1,3 +1,3 @@
-import { plotData } from "./plot_data/plot.js";
+import { plotData } from "./src/plot.js";
 
 plotData();

@@ -2,17 +2,7 @@ import { data } from './data.js';
 import { layout } from './layout.js';
 import { annotations } from './annotations.js';
 import { PlayOnHover, stopSound } from './audio.js'; 
-
-// Ruta del archivo de sonido personalizado
-// const audioFilePath = "sonidos/sonido_prueba.mp3"; // Cambia esta ruta a la de tu archivo de sonido
-
-// // Crear un reproductor de audio con Tone.js
-// let audioPlayer;
-// Tone.loaded().then(() => {
-//     audioPlayer = new Tone.Player(audioFilePath).toDestination();
-//     audioPlayer.autostart = false;
-//     audioPlayer.loop = false;
-// });
+import { place_image } from './images.js';
 
 function add_annotations_and_images_to_layout() {
     data.forEach(trace => {
@@ -70,28 +60,12 @@ export function plotData() {
 
     document.getElementById(div).on('plotly_hover', function(eventData) {
         const point = eventData.points[0];
-        const traceIndex = point.curveNumber;
-        const pointIndex = point.pointIndex;
+        // const traceIndex = point.curveNumber;
+        // const pointIndex = point.pointIndex;
         const xValue = point.x;
         const yValue = point.y;
 
-        // Configuración de la imagen de hover
-        let hoverImage = {
-            source: imageUrls[traceIndex][pointIndex],
-            x: xValue,
-            y: yValue - 8,
-            sizex: 10,
-            sizey: 10,
-            xanchor: "center",
-            yanchor: "middle",
-            xref: "x",
-            yref: "y"
-        };
-
-        // Actualizamos layout.images sin eliminar otras imágenes
-        layout.images = [hoverImage];
-        Plotly.relayout(div, { images: layout.images });
-
+        place_image(xValue, yValue, layout);
         // Asegurarse de que el contexto de audio esté activado y reproducir el sonido
         PlayOnHover(xValue, yValue);
     });
