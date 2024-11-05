@@ -3,6 +3,10 @@ import { layout } from './layout.js';
 import { annotations } from './annotations.js';
 import { PlayOnHover, stopSound } from './audio.js'; 
 import { place_image } from './images.js';
+import { loadData } from './data_loader.js';
+
+const yearFunFact = await loadData();
+console.log(yearFunFact);
 
 function add_annotations_and_images_to_layout() {
     data.forEach(trace => {
@@ -23,34 +27,6 @@ function add_annotations_and_images_to_layout() {
     layout.annotations = annotations;
 }
 
-const imageUrls = [
-    // Imágenes para el primer trace (trace 0)
-    ["imagenes/twitterX.png",
-        "imagenes/Instagram_logo_2022.svg.png",
-        "imagenes/google-plus-logo.png",
-        "imagenes/google-plus-logo.png",
-        "imagenes/Instagram_logo_2022.svg.png",
-        "imagenes/twitterX.png",
-        "imagenes/google-plus-logo.png",
-        "imagenes/Instagram_logo_2022.svg.png",
-        "imagenes/google-plus-logo.png",
-        "imagenes/google-plus-logo.png"
-    ],
-    
-    // Imágenes para el segundo trace (trace 1)
-    ["imagenes/twitterX.png",
-        "imagenes/Instagram_logo_2022.svg.png",
-        "imagenes/google-plus-logo.png",
-        "imagenes/twitterX.png",
-        "imagenes/google-plus-logo.png",
-        "imagenes/google-plus-logo.png",
-        "imagenes/Los-gatos-tienen-casi-300-expresiones-faciales.jpg",
-        "imagenes/google-plus-logo.png",
-        "imagenes/twitterX.png",
-        "imagenes/twitterX.png"
-    ],
-];
-
 export function plotData() {
     layout.images = layout.images || [];
     add_annotations_and_images_to_layout();
@@ -64,6 +40,7 @@ export function plotData() {
         // const pointIndex = point.pointIndex;
         const xValue = point.x;
         const yValue = point.y;
+        console.log(yearFunFact[xValue]);
 
         place_image(xValue, yValue, layout);
         // Asegurarse de que el contexto de audio esté activado y reproducir el sonido

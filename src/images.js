@@ -5,7 +5,8 @@ const images_paths = {
     instagram: "imagenes/instagram.png",
     gato: "imagenes/gato.jpg",
     youtube: "imagenes/youtube.png",
-    tiktok: "imagenes/tiktok.png"
+    tiktok: "imagenes/tiktok.png",
+    chile: "imagenes/chile.png"
 }
 
 const image_year_mapping = {
@@ -15,7 +16,7 @@ const image_year_mapping = {
     2017: images_paths.facebook,
     2018: images_paths.instagram,
     2019: images_paths.twitter,
-    2020: images_paths.gato,
+    2020: images_paths.chile,
     2021: images_paths.youtube,
     2022: images_paths.tiktok,
     2023: images_paths.tiktok,

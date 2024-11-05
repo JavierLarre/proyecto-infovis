@@ -27,9 +27,10 @@ for (const key in year_mapping) {
 }
 
 function playSound(xValue, yValue) {
-    const frequency = Math.min(2, Math.max(0.5, yValue / 500));
+    const frequency = yValue / 100;
+    const adjust = 1.5;
     audio_player = year_mapping[xValue];
-    // audio_player.playbackRate = frequency;
+    audio_player.playbackRate = frequency * adjust;
     audio_player.loop = true;
     audio_player.start();
 }
