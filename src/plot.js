@@ -9,7 +9,6 @@ import { trace_facebook } from './trace_facebook.js';
 import { trace_instagram } from './trace_instagram.js';
 
 const yearFunFact = await loadData();
-console.log(yearFunFact);
 
 function add_annotations_and_images_to_layout() {
     data.forEach(trace => {
@@ -39,7 +38,7 @@ function changeTrace(button) {
         trace = trace_instagram;
     }
     const plot = document.getElementById('myDiv');
-    plot.data[0] = trace;
+    plot.data[2] = trace;
     Plotly.redraw(plot);
 }
 
@@ -49,6 +48,7 @@ function connectButtons(buttons) {
             changeTrace(button);
         }
     }
+    data.push([]);
 }
 
 export function plotData() {
