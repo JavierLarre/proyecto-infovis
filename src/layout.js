@@ -32,7 +32,7 @@ export const layout = {
             size: 12,
             color: 'rgb(82, 82, 82)'
         },
-        range: [2013, 2023] // damos un rango al eje X
+        range: [2014, 2023] // damos un rango al eje X
     },
     yaxis: {
         showgrid: false, // muestra la grilla del gráfico
@@ -59,21 +59,6 @@ export const layout = {
 
     // Para añadir lineas verticales 
     shapes: [
-        // Línea vertical para el inicio de 4G
-        {
-            type: 'line',
-            x0: 2014, // Ajusta el valor según el año en que comenzó el 4G
-            x1: 2014,
-            y0: 0,
-            y1: 100,
-            xref: 'x',
-            yref: 'y',
-            line: {
-                color: 'gray',
-                width: 2,
-                dash: 'dot'
-            }
-        },
         // Línea vertical para el inicio de 5G
         {
             type: 'line',
