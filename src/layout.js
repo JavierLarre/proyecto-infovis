@@ -59,6 +59,66 @@ export const layout = {
 
     // Para añadir lineas verticales 
     shapes: [
+          // Línea inclinada (facebook)
+          {
+            type: 'line',
+            x0: 2014,
+            x1: 2017,
+            y0: 70.77,
+            y1: 70.77,
+            xref: 'x',
+            yref: 'y',
+            line: {
+                color: 'gray',
+                width: 2,
+                dash: 'dot'
+            }
+          },
+          // linea inclinada (instagram)
+          {
+            type: 'line',
+            x0: 2014,
+            x1: 2018,
+            y0: 32.08,
+            y1: 32.08,
+            xref: 'x',
+            yref: 'y',
+            line: {
+                color: 'gray',
+                width: 2,
+                dash: 'dot'
+            }
+          },
+                    // linea inclinada (instagram)
+          {
+            type: 'line',
+            x0: 2014,
+            x1: 2018,
+            y0: 32.08,
+            y1: 32.08,
+            xref: 'x',
+            yref: 'y',
+            line: {
+                color: 'gray',
+                width: 2,
+                dash: 'dot'
+            }
+          },
+          // linea inclinada (twitter)
+          {
+            type: 'line',
+            x0: 2014,
+            x1: 2019,
+            y0: 8.04,
+            y1: 8.04,
+            xref: 'x',
+            yref: 'y',
+            line: {
+                color: 'gray',
+                width: 2,
+                dash: 'dot'
+            }
+          },
         // Línea vertical para el inicio de 5G
         {
             type: 'line',

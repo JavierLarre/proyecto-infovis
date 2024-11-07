@@ -150,6 +150,5 @@ export const annotations = [
     titulo,
     fuentes,
     porcentaje,
-    label_4g,
     label_5g,
 ];
