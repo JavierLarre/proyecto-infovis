@@ -31,7 +31,7 @@ export async function plotData() {
     const social_medias = [
         new SocialMedia('Facebook', 'sonidos/facebook.wav', 'imagenes/facebook.png', 'scripts/uso_facebook.json', 2),
         new SocialMedia('Instagram', 'sonidos/instagram.wav', 'imagenes/instagram.png', 'scripts/uso_instagram.json', 3),
-        // new SocialMedia('Twitter', 'sonidos/twitter.wav', 'imagenes/twitter.png', 'scripts/uso_twitter.json'),
+        new SocialMedia('Twitter', 'sonidos/twitter.wav', 'imagenes/twitter.png', 'scripts/uso_twitter.json', 4),
         // new SocialMedia('Youtube', 'sonidos/youtube.wav', 'imagenes/youtube.png', 'scripts/uso_youtube.json'),
         // new SocialMedia('Google', 'sonidos/google.wav', 'imagenes/google.png', 'scripts/uso_google.json')
     ]

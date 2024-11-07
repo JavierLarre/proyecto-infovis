@@ -62,16 +62,12 @@ export class SocialMedia {
         return data;
     }
     cleanData() {
-        for (const key in this.data) {
-            if (this.data[key] === 0) {
-                delete this.data[key];
-            }
-            else {
-                this.data[key] = (
-                    (parseFloat(this.data[key]) * 100)
-                    / parseFloat(this.users_mill[key]));
-            }
-        }
+        Object.keys(this.data).forEach(key => {
+            this.data[key] = (
+                (parseFloat(this.data[key]) * 100)
+                / parseFloat(this.users_mill[key])
+            );
+        });
     }
     createTrace() {
         this.trace = {
