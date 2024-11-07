@@ -3,12 +3,10 @@ import { layout } from './layout.js';
 import { annotations } from './annotations.js';
 import { PlayOnHover, stopSound } from './audio.js'; 
 import { place_image } from './images.js';
-import { loadData } from './data_loader.js';
 import { addButtons } from './buttons.js';
 import { trace_facebook } from './trace_facebook.js';
 import { trace_instagram } from './trace_instagram.js';
 
-const yearFunFact = await loadData();
 
 function add_annotations_and_images_to_layout() {
     data.forEach(trace => {
@@ -61,18 +59,20 @@ export function plotData() {
 
     document.getElementById(div).on('plotly_hover', function(eventData) {
         const point = eventData.points[0];
-        // const traceIndex = point.curveNumber;
+        const traceIndex = point.curveNumber;
         // const pointIndex = point.pointIndex;
         const xValue = point.x;
         const yValue = point.y;
-        console.log(yearFunFact[xValue]);
 
+        if (traceIndex !== 2) return;
         place_image(xValue, yValue, layout);
         // Asegurarse de que el contexto de audio esté activado y reproducir el sonido
         PlayOnHover(xValue, yValue);
     });
 
-    document.getElementById(div).on('plotly_unhover', function() {
+    document.getElementById(div).on('plotly_unhover', function(eventData) {
+        const traceIndex = eventData.points[0].curveNumber;
+        if (traceIndex !== 2) return;
         // Limpiar las imágenes en el layout sin eliminar otras configuraciones
         layout.images = [];
         Plotly.relayout(div, { images: layout.images });
