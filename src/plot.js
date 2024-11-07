@@ -29,17 +29,16 @@ export async function plotData() {
 
     const div = 'myDiv';
     const social_medias = [
-        new SocialMedia('Facebook', 'sonidos/facebook.wav', 'imagenes/facebook.png', 'scripts/uso_facebook.json'),
-        new SocialMedia('Instagram', 'sonidos/instagram.wav', 'imagenes/instagram.png', 'scripts/uso_instagram.json'),
-        // new SocialMedia('Twitter', 'sonidos/twitter.wav', 'iconos/twitter.png', 'scripts/uso_twitter.json'),
-        // new SocialMedia('Youtube', 'sonidos/youtube.wav', 'iconos/youtube.png', 'scripts/uso_youtube.json'),
-        // new SocialMedia('Google', 'sonidos/google.wav', 'iconos/google.png', 'scripts/uso_google.json')
+        new SocialMedia('Facebook', 'sonidos/facebook.wav', 'imagenes/facebook.png', 'scripts/uso_facebook.json', 2),
+        new SocialMedia('Instagram', 'sonidos/instagram.wav', 'imagenes/instagram.png', 'scripts/uso_instagram.json', 3),
+        // new SocialMedia('Twitter', 'sonidos/twitter.wav', 'imagenes/twitter.png', 'scripts/uso_twitter.json'),
+        // new SocialMedia('Youtube', 'sonidos/youtube.wav', 'imagenes/youtube.png', 'scripts/uso_youtube.json'),
+        // new SocialMedia('Google', 'sonidos/google.wav', 'imagenes/google.png', 'scripts/uso_google.json')
     ]
 
     await Promise.all(social_medias.map(sm => sm.initialize()));
     
-    data.push(social_medias[0].trace);
-    data.push(social_medias[1].trace);
+    social_medias.forEach(sm => data.push(sm.trace));
     Plotly.newPlot(div, data, layout, { displayModeBar: false, scrollZoom: true });
 
     document.getElementById(div).on('plotly_hover', function(eventData) {
@@ -48,6 +47,7 @@ export async function plotData() {
         if (traceIndex < 2) 
             return;
         const social_media = social_medias[traceIndex - 2];
+        social_media.changeColor('blue');
         social_media.playSound();
         social_media.placeImage(layout, point.x, point.y);
     });
@@ -60,7 +60,9 @@ export async function plotData() {
         const traceIndex = eventData.points[0].curveNumber;
         if (traceIndex < 2) 
             return;
-        social_medias[traceIndex - 2].stopSound();
+        const social_media = social_medias[traceIndex - 2];
+        social_media.stopSound();
+        social_media.changeColor('gray');
         // Detener el sonido al dejar de estar sobre la línea
     });
 }

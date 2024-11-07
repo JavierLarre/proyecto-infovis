@@ -1,5 +1,5 @@
 export class SocialMedia {
-    constructor(name, audio_path, icon_path, use_data_path) {
+    constructor(name, audio_path, icon_path, use_data_path, traceIndex) {
         this.div = 'myDiv';
         this.users_mill_path = "scripts/users_mill.json";
 
@@ -7,6 +7,7 @@ export class SocialMedia {
         this.icon_path = icon_path;
         this.audio_path = audio_path
         this.use_data_path = use_data_path;
+        this.traceIndex = traceIndex;
         
         this.createAudioPlayer();
     }
@@ -82,5 +83,9 @@ export class SocialMedia {
             hoverinfo: 'none',
             hovertemplate: `Año: %{x}<br>Usuarios: %{y:.2f} <extra></extra>`
         }
+    }
+    changeColor(color) {
+        this.trace.line.color = color;
+        Plotly.restyle(this.div, { 'line.color': color }, [this.traceIndex]);
     }
 }
