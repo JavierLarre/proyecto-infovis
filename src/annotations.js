@@ -5,7 +5,7 @@ const comentario_usuarios = {
     xref: 'x',
     yref: 'y',
     text: `
-    La cantidad de usuarios en redes sociales <br>
+    La cantidad de usuarios activos <br>
     <b><u>disminuye</u></b> a pesar de la disponibilidad de  <br>
     mejores velocidades de internet. <br>
     <b>Sin embargo</b>, las conexiones móviles  <br>
@@ -56,8 +56,7 @@ const titulo = {
     xanchor: 'left',
     yanchor: 'bottom',
     text: `
-    Estabilidad de conexiones móviles <br>
-    vs. cantidad de usuarios en Redes Sociales en Chile
+    Estabilidad de conexiones móviles en Chile <br> vs. cantidad de usuarios activos en Redes Sociales en Chile
     `,
     font: {
         family: 'Arial',

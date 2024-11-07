@@ -19,7 +19,7 @@ export const trace_redes_sociales = {
     x: ano,
     y: users_mill,
     mode: 'lines', // indica que tipo 
-    name: 'Personas con <br>Redes Sociales', //título o nombre del dato
+    name: 'Usuarios Activos', //título o nombre del dato
     line: { color: 'green', width: 2 }, // le doy color a la linea y grosor
     hoverinfo: 'none',
     hovertemplate: 'Año: %{x}<br>Personas: %{y:.2f} <extra></extra>  '
