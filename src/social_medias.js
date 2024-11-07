@@ -10,7 +10,6 @@ export class SocialMedia {
         
         this.createAudioPlayer();
     }
-
     async initialize() {
         const data = await this.loadData(this.use_data_path);
         this.data = data;
@@ -18,7 +17,6 @@ export class SocialMedia {
         this.cleanData();
         this.createTrace();
     }
-
     playSound() {
         if (Tone.context.state !== 'running') {
             Tone.context.resume().then(() => {
@@ -29,7 +27,6 @@ export class SocialMedia {
             this.audio.start();
         }
     }
-
     stopSound() {
         if (this.audio && this.audio.state === "started") {
             this.audio.stop();
@@ -40,7 +37,7 @@ export class SocialMedia {
         const hoverImage = {
             source: this.icon_path,
             x: x,
-            y: y - 8,
+            y: y,
             sizex: 10,
             sizey: 10,
             xanchor: "center",
@@ -53,28 +50,10 @@ export class SocialMedia {
         layout.images = [hoverImage];
         Plotly.relayout(this.div, { images: layout.images });
     }
-    createButton() {
-        const button = document.createElement('button');
-        document.getElementById(this.div).appendChild(button);
-        button.innerHTML = this.name;
-        this.button = button;
-    }
-    connectButton() {
-        this.button.onclick = () => {
-            this.changeTrace();
-        }
-    }
-    createAndConnectButton() {
-        this.createButton();
-        this.connectButton();
-    }
     createAudioPlayer() {
         this.audio = new Tone.Player(this.audio_path).toDestination();
         this.audio.autostart = false;
         this.audio.loop = false;
-    }
-    changeTrace() {
-        throw new Error("Method 'changeTrace()' must be implemented.");
     }
     async loadData(path) {
         const response = await fetch(path);
@@ -87,11 +66,6 @@ export class SocialMedia {
                 delete this.data[key];
             }
             else {
-                console.log(
-                    this.data[key], this.users_mill[key],
-                    parseFloat(this.users_mill[key]),
-                    parseFloat(this.data[key]) * 100,
-                    (parseFloat(this.data[key]) * 100) / parseFloat(this.users_mill[key]));
                 this.data[key] = (
                     (parseFloat(this.data[key]) * 100)
                     / parseFloat(this.users_mill[key]));
