@@ -12,7 +12,6 @@ rows.forEach(row => {
     ano.push(parseFloat(cols[0]));
     users_mill.push((parseFloat(cols[1]) * 100) / (parseFloat(cols[3]) / 1000000));
 });
-console.log(users_mill);
 
 // COLOCO la data de REDES SOCIALES en variable
 // para plotly con caracteristicas

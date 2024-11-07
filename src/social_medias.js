@@ -1,15 +1,22 @@
-class SocialMedia {
+export class SocialMedia {
     constructor(name, audio_path, icon_path, use_data_path) {
+        this.div = 'myDiv';
+        this.users_mill_path = "scripts/users_mill.json";
+
         this.name = name;
         this.icon_path = icon_path;
         this.audio_path = audio_path
         this.use_data_path = use_data_path;
         
-        this.createAndConnectButton();
         this.createAudioPlayer();
+    }
 
-        this.div = 'myDiv';
-        this.users_mill_path = "scripts/users_mill.json";
+    async initialize() {
+        const data = await this.loadData(this.use_data_path);
+        this.data = data;
+        this.users_mill = await this.loadData(this.users_mill_path);
+        this.cleanData();
+        this.createTrace();
     }
 
     playSound() {
@@ -74,7 +81,32 @@ class SocialMedia {
         const data = await response.json();
         return data;
     }
-    async saveData() {
-        this.data = await this.loadData(this.use_data_path);
+    cleanData() {
+        for (const key in this.data) {
+            if (this.data[key] === 0) {
+                delete this.data[key];
+            }
+            else {
+                console.log(
+                    this.data[key], this.users_mill[key],
+                    parseFloat(this.users_mill[key]),
+                    parseFloat(this.data[key]) * 100,
+                    (parseFloat(this.data[key]) * 100) / parseFloat(this.users_mill[key]));
+                this.data[key] = (
+                    (parseFloat(this.data[key]) * 100)
+                    / parseFloat(this.users_mill[key]));
+            }
+        }
+    }
+    createTrace() {
+        this.trace = {
+            x: Object.keys(this.data),
+            y: Object.values(this.data),
+            mode: 'lines',
+            name: `Usuarios de ${this.name}`,
+            line: { color: 'gray', width: 2 },
+            hoverinfo: 'none',
+            hovertemplate: `Año: %{x}<br>Usuarios: %{y:.2f} <extra></extra>`
+        }
     }
 }

@@ -6,6 +6,7 @@ import { place_image } from './images.js';
 import { addButtons } from './buttons.js';
 import { trace_facebook } from './trace_facebook.js';
 import { trace_instagram } from './trace_instagram.js';
+import { SocialMedia } from './social_medias.js';
 
 
 function add_annotations_and_images_to_layout() {
@@ -49,13 +50,25 @@ function connectButtons(buttons) {
     data.push([]);
 }
 
-export function plotData() {
+export async function plotData() {
     layout.images = layout.images || [];
     add_annotations_and_images_to_layout();
 
     const div = 'myDiv';
+    const social_medias = [
+        new SocialMedia('Facebook', 'sonidos/facebook.wav', 'iconos/facebook.png', 'scripts/uso_facebook.json'),
+        new SocialMedia('Instagram', 'sonidos/instagram.wav', 'iconos/instagram.png', 'scripts/uso_instagram.json'),
+        // new SocialMedia('Twitter', 'sonidos/twitter.wav', 'iconos/twitter.png', 'scripts/uso_twitter.json'),
+        // new SocialMedia('Youtube', 'sonidos/youtube.wav', 'iconos/youtube.png', 'scripts/uso_youtube.json'),
+        // new SocialMedia('Google', 'sonidos/google.wav', 'iconos/google.png', 'scripts/uso_google.json')
+    ]
+
+    await Promise.all(social_medias.map(sm => sm.initialize()));
+    
+    data.push(social_medias[0].trace);
+    data.push(social_medias[1].trace);
     Plotly.newPlot(div, data, layout, { displayModeBar: false, scrollZoom: true });
-    connectButtons(addButtons(div));
+    // connectButtons(addButtons(div));
 
     document.getElementById(div).on('plotly_hover', function(eventData) {
         const point = eventData.points[0];
@@ -64,7 +77,9 @@ export function plotData() {
         const xValue = point.x;
         const yValue = point.y;
 
-        if (traceIndex !== 2) return;
+        console.log(traceIndex);
+
+        return;
         place_image(xValue, yValue, layout);
         // Asegurarse de que el contexto de audio esté activado y reproducir el sonido
         PlayOnHover(xValue, yValue);
