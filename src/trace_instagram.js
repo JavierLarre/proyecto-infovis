@@ -18,7 +18,6 @@ function clean_data(data, users_mill) {
 }
 
 const data = await loadData(data_path);
-console.log(data);
 const users_mill = await loadData(users_mill_path);
 clean_data(data, users_mill);
 
