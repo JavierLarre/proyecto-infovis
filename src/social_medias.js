@@ -1,6 +1,7 @@
 export class SocialMedia {
     constructor(name, audio_path, icon_path, use_data_path, traceIndex) {
-        this.div = 'myDiv';
+        this.plot_div = 'myDiv';
+        this.image_div = 'svgContainer';
         this.users_mill_path = "scripts/users_mill.json";
 
         this.name = name;
@@ -8,6 +9,12 @@ export class SocialMedia {
         this.audio_path = audio_path
         this.use_data_path = use_data_path;
         this.traceIndex = traceIndex;
+
+        this.image_element = null;
+        this.audio = null;
+        this.data = null;
+        this.users_mill = null;
+        this.trace = null;
         
         this.createAudioPlayer();
     }
@@ -49,7 +56,16 @@ export class SocialMedia {
         // Actualizamos layout.images sin eliminar otras imágenes
         // por qué ??????
         layout.images = [hoverImage];
-        Plotly.relayout(this.div, { images: layout.images });
+        Plotly.relayout(this.plot_div, { images: layout.images });
+    }
+    placeImageDiv() {
+        this.image_element = document.createElement('img');
+        this.image_element.src = this.icon_path;
+        this.image_element.className = 'image-on-hover';
+        document.getElementById(this.image_div).appendChild(this.image_element);
+    }
+    removeImage() {
+        document.getElementById(this.image_div).removeChild(this.image_element);
     }
     createAudioPlayer() {
         this.audio = new Tone.Player(this.audio_path).toDestination();
@@ -82,15 +98,16 @@ export class SocialMedia {
     }
     changeColor(color) {
         this.trace.line.color = color;
-        Plotly.restyle(this.div, { 'line.color': color }, [this.traceIndex]);
+        Plotly.restyle(this.plot_div, { 'line.color': color }, [this.traceIndex]);
     }
     onHover(layout, x, y) {
         this.changeColor('blue');
-        this.placeImage(layout, x, y);
+        this.placeImageDiv();
         this.playSound();
     }
     unHover() {
         this.changeColor('gray');
         this.stopSound();
+        this.removeImage();
     }
 }

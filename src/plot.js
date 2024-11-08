@@ -2,7 +2,7 @@ import { data } from './data.js';
 import { layout } from './layout.js';
 import { annotations } from './annotations.js';
 import { SocialMedia } from './social_medias.js';
-// import { SVGHandler } from './svg_handler.js';
+import { SVGHandler } from './svg_handler.js';
 
 
 var social_medias = [];
@@ -17,7 +17,8 @@ async function get_social_medias() {
         ),
         new SocialMedia(
             'Instagram', 'sonidos/instagram.wav',
-            'imagenes/instagram.png', 'scripts/uso_instagram.json', 3),
+            'imagenes/instagram.png', 'scripts/uso_instagram.json', 3
+        ),
         new SocialMedia(
             'Twitter', 'sonidos/twitter.wav',
             'imagenes/twitter.png', 'scripts/uso_twitter.json', 4
@@ -74,6 +75,10 @@ export async function plotData() {
     add_annotations_and_images_to_layout();
 
     await get_social_medias();
+    const svgHandler = new SVGHandler(
+        "svgContainer", "dibujos_svg/cuadro_texto_oscuro.svg"
+    );
+    await svgHandler.loadSVG();
     
     social_medias.forEach(sm => data.push(sm.trace));
     Plotly.newPlot(div, data, layout, { displayModeBar: false, scrollZoom: true });
