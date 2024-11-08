@@ -1,20 +1,14 @@
 
 const comentario_usuarios = {
-    x: 2022.5, // Valor en el eje X donde se colocará la anotación
-    y: 87, // Valor en el eje Y donde se colocará la anotación
+    x: 2022, // Valor en el eje X donde se colocará la anotación
+    y: 91, // Valor en el eje Y donde se colocará la anotación
     xref: 'x',
     yref: 'y',
-    text: `
-    La cantidad de usuarios activos <br>
-    <b><u>disminuye</u></b> a pesar de la disponibilidad de  <br>
-    mejores velocidades de internet. <br>
-    <b>Sin embargo</b>, las conexiones móviles  <br>
-    se han mantenido estables y constantes.
-    `,
+    text: '',
     showarrow: true, // Muestra la flecha que apunta al punto
     arrowhead: 2, // Tipo de flecha
     ax: 30, // Desplazamiento horizontal de la anotación (en píxeles)
-    ay: 200, // Desplazamiento vertical de la anotación (en píxeles)
+    ay: 100, // Desplazamiento vertical de la anotación (en píxeles)
     bordercolor: 'black', // Color del borde del recuadro
     borderwidth: 0,
     borderpad: 5,
@@ -145,7 +139,6 @@ const label_5g = {
 // creamos una variable anotaciones para agregar recuadros y 
 // cosas extras al gráfico
 export const annotations = [
-
     comentario_usuarios,
     titulo,
     fuentes,

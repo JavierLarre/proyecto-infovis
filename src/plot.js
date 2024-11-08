@@ -24,7 +24,6 @@ async function get_social_medias() {
             'imagenes/twitter.png', 'scripts/uso_twitter.json', 4
         ),
         // new SocialMedia('Youtube', 'sonidos/youtube.wav', 'imagenes/youtube.png', 'scripts/uso_youtube.json'),
-        // new SocialMedia('Google', 'sonidos/google.wav', 'imagenes/google.png', 'scripts/uso_google.json')
     ]
     await Promise.all(social_medias.map(sm => sm.initialize()));
 }
@@ -32,18 +31,26 @@ async function get_social_medias() {
 function add_annotations_and_images_to_layout() {
     data.forEach(trace => {
         annotations.push({
-            x: trace.x[trace.x.length - 1],
+            x: trace.x[trace.x.length - 1] ,
             y: trace.y[trace.y.length - 1],
             xanchor: 'left',
             yanchor: 'middle',
             text: trace.name,
             font: {
                 family: 'Trebuchet MS',
-                size: 15,
+                size: 14,
                 color: trace.line?.color || 'black'
             },
             showarrow: false
         });
+        if (trace.name === `Usuarios de <br> <b>Instagram<b>`){
+            const ann = annotations[annotations.length - 1] 
+            ann.y = ann.y - 2;
+        }
+        if (trace.name === `Usuarios de <br> <b>Facebook<b>`){
+            const ann = annotations[annotations.length - 1] 
+            ann.y = ann.y + 2;
+        }
     });
     layout.annotations = annotations;
 }
@@ -59,6 +66,7 @@ function hoverEvent(eventData) {
 
 function unHoverEvent(eventData) {
     layout.images = [];
+    layout.xaxis.range = [2014, 2023];
     Plotly.relayout(div, { images: layout.images });
     
     const traceIndex = eventData.points[0].curveNumber;
@@ -72,8 +80,7 @@ function unHoverEvent(eventData) {
 export async function plotData() {
     div = 'myDiv';
     layout.images = layout.images || [];
-    add_annotations_and_images_to_layout();
-
+    
     await get_social_medias();
     const svgHandler = new SVGHandler(
         "svgContainer", "dibujos_svg/cuadro_texto_oscuro.svg"
@@ -81,6 +88,7 @@ export async function plotData() {
     await svgHandler.loadSVG();
     
     social_medias.forEach(sm => data.push(sm.trace));
+    add_annotations_and_images_to_layout();
     Plotly.newPlot(div, data, layout, { displayModeBar: false, scrollZoom: true });
 
     document.getElementById(div).on('plotly_hover', hoverEvent);

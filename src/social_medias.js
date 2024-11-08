@@ -46,12 +46,12 @@ export class SocialMedia {
             source: this.icon_path,
             x: x,
             y: y,
-            sizex: 10,
-            sizey: 10,
+            sizex: 0.1,
+            sizey: 0.1,
             xanchor: "center",
             yanchor: "middle",
-            xref: "x",
-            yref: "y"
+            xref: "paper",
+            yref: "paper"
         };
         // Actualizamos layout.images sin eliminar otras imágenes
         // por qué ??????
@@ -90,7 +90,7 @@ export class SocialMedia {
             x: Object.keys(this.data),
             y: Object.values(this.data),
             mode: 'lines',
-            name: `Usuarios de ${this.name}`,
+            name: `Usuarios de <br> <b>${this.name}<b>`,
             line: { color: 'gray', width: 2 },
             hoverinfo: 'none',
             hovertemplate: `Año: %{x}<br>Usuarios: %{y:.2f} <extra></extra>`
@@ -101,13 +101,14 @@ export class SocialMedia {
         Plotly.restyle(this.plot_div, { 'line.color': color }, [this.traceIndex]);
     }
     onHover(layout, x, y) {
+        this.trace.line.width = 4;
         this.changeColor('blue');
-        this.placeImageDiv();
+        this.placeImage(layout, 1.15, this.data[2023] / 100);
         this.playSound();
     }
     unHover() {
+        this.trace.line.width = 2;
         this.changeColor('gray');
         this.stopSound();
-        this.removeImage();
     }
 }
