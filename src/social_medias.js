@@ -84,4 +84,13 @@ export class SocialMedia {
         this.trace.line.color = color;
         Plotly.restyle(this.div, { 'line.color': color }, [this.traceIndex]);
     }
+    onHover(layout, x, y) {
+        this.changeColor('blue');
+        this.placeImage(layout, x, y);
+        this.playSound();
+    }
+    unHover() {
+        this.changeColor('gray');
+        this.stopSound();
+    }
 }
