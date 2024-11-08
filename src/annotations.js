@@ -1,13 +1,13 @@
 
 const comentario_usuarios = {
-    x: 2022, // Valor en el eje X donde se colocará la anotación
-    y: 91, // Valor en el eje Y donde se colocará la anotación
+    x: 2022.67, // Valor en el eje X donde se colocará la anotación
+    y: 86, // Valor en el eje Y donde se colocará la anotación
     xref: 'x',
     yref: 'y',
     text: '',
     showarrow: true, // Muestra la flecha que apunta al punto
     arrowhead: 2, // Tipo de flecha
-    ax: 30, // Desplazamiento horizontal de la anotación (en píxeles)
+    ax: 400, // Desplazamiento horizontal de la anotación (en píxeles)
     ay: 100, // Desplazamiento vertical de la anotación (en píxeles)
     bordercolor: 'black', // Color del borde del recuadro
     borderwidth: 0,
