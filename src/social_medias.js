@@ -12,11 +12,11 @@ export class SocialMedia {
 
         this.image_element = null;
         this.audio = null;
+        this.looper = null;
         this.data = null;
         this.users_mill = null;
         this.trace = null;
         
-        this.createAudioPlayer();
     }
     async initialize() {
         const data = await this.loadData(this.use_data_path);
@@ -24,16 +24,10 @@ export class SocialMedia {
         this.users_mill = await this.loadData(this.users_mill_path);
         this.cleanData();
         this.createTrace();
+        await this.createAudioPlayer();
     }
-    playSound() {
-        if (Tone.context.state !== 'running') {
-            Tone.context.resume().then(() => {
-                this.audio.start();
-            });
-        }
-        else {
-            this.audio.start();
-        }
+    playSound(time) {
+        this.audio.start(time);
     }
     stopSound() {
         if (this.audio && this.audio.state === "started") {
@@ -67,10 +61,20 @@ export class SocialMedia {
     removeImage() {
         document.getElementById(this.image_div).removeChild(this.image_element);
     }
-    createAudioPlayer() {
-        this.audio = new Tone.Player(this.audio_path).toDestination();
+    async createAudioPlayer() {
+        this.audio = await new Tone.Player(this.audio_path).toDestination();
         this.audio.autostart = false;
         this.audio.loop = false;
+        this.looper = new Tone.Loop((time) => this.playSound(time), 1);
+    }
+    startLooper(year) {
+        this.looper.interval = this.data[year] / this.users_mill[year];
+        Tone.Transport.start();
+        this.looper.start(0);
+    }
+    stopLooper() {
+        this.looper.stop(0);
+        Tone.Transport.stop();
     }
     async loadData(path) {
         const response = await fetch(path);
@@ -104,11 +108,11 @@ export class SocialMedia {
         this.trace.line.width = 4;
         this.changeColor('blue');
         this.placeImage(layout, 1.15, this.data[2023] / 100);
-        this.playSound();
+        this.startLooper(x);
     }
     unHover() {
         this.trace.line.width = 2;
         this.changeColor('gray');
-        this.stopSound();
+        this.stopLooper();
     }
 }
