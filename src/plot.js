@@ -3,6 +3,8 @@ import { layout } from './layout.js';
 import { annotations } from './annotations.js';
 import { SocialMedia } from './social_medias.js';
 import { SVGHandler } from './svg_handler.js';
+//import Protobject from './js/protobject.js'; // Importa el objeto Protobject para la comunicación
+
 
 
 var social_medias = [];
@@ -76,6 +78,33 @@ function unHoverEvent(eventData) {
     social_media.unHover();
     // Detener el sonido al dejar de estar sobre la línea
 }
+
+// // Escucha los datos recibidos desde Protobject
+// Protobject.onReceived((order) => {
+//     // Simula un "hover" o "unhover" basado en el contenido de `order`
+//     if (order.action === 'hover') {
+//         const traceIndex = order.traceIndex;
+        
+//         if (traceIndex >= 2 && traceIndex - 2 < social_medias.length) {
+//             const social_media = social_medias[traceIndex - 2];
+//             social_media.onHover(layout, order.x, order.y);
+//         }
+//     } else if (order.action === 'unhover') {
+//         layout.images = [];
+//         layout.xaxis.range = [2014, 2023];
+//         Plotly.relayout(div, { images: layout.images });
+        
+//         const traceIndex = order.traceIndex;
+//         if (traceIndex >= 2 && traceIndex - 2 < social_medias.length) {
+//             const social_media = social_medias[traceIndex - 2];
+//             social_media.unHover();
+//         }
+//     }
+
+//     // Redibuja el gráfico con las trazas seleccionadas
+//     Plotly.newPlot('myDiv', dataset, layout);
+// });
+
 
 export async function plotData() {
     div = 'myDiv';
