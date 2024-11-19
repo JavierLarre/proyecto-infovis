@@ -69,6 +69,7 @@ export class SocialMedia {
     }
     startLooper(year) {
         this.looper.interval = this.data[year] / this.users_mill[year];
+        this.looper.interval = (this.users_mill[year] / this.data[year]) + 1;
         Tone.Transport.start();
         this.looper.start(0);
     }
@@ -104,15 +105,21 @@ export class SocialMedia {
         this.trace.line.color = color;
         Plotly.restyle(this.plot_div, { 'line.color': color }, [this.traceIndex]);
     }
+    highlightTrace() {
+        const color = 'blue';
+        Plotly.restyle(this.plot_div, { 'line.width': 4, 'line.color': color }, [this.traceIndex]);
+    }
+    unHighlightTrace() {
+        const color = 'gray';
+        Plotly.restyle(this.plot_div, { 'line.width': 2, 'line.color': color }, [this.traceIndex]);
+    }
     onHover(layout, x, y) {
-        this.trace.line.width = 4;
-        this.changeColor('blue');
+        this.highlightTrace();
         this.placeImage(layout, 1.15, this.data[2023] / 100);
         this.startLooper(x);
     }
     unHover() {
-        this.trace.line.width = 2;
-        this.changeColor('gray');
+        this.unHighlightTrace();
         this.stopLooper();
     }
 }
