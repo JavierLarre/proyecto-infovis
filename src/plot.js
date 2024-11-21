@@ -107,6 +107,28 @@ function unHoverEvent(eventData) {
 
 
 export async function plotData() {
+    
+    const videoElement = document.getElementById("camera");
+
+    // Verifica si getUserMedia es compatible y solicita acceso a la cámara
+    if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+        console.log("Accediendo a la cámara...");
+    }
+
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                width: 720,
+                height: 720,
+            },
+        });
+        videoElement.srcObject = stream; // Asigna el flujo al video
+    } catch (error) {
+        console.error("Error al acceder a la cámara:", error);
+        alert("No se puede acceder a la cámara. Verifica los permisos.");
+    }
+
+    // plotply
     div = 'myDiv';
     layout.images = layout.images || [];
     
@@ -122,4 +144,5 @@ export async function plotData() {
 
     document.getElementById(div).on('plotly_hover', hoverEvent);
     document.getElementById(div).on('plotly_unhover', unHoverEvent);
+    
 }
