@@ -118,8 +118,8 @@ export async function plotData() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({
             video: {
-                width: 720,
-                height: 720,
+                width: 420,
+                height: 420,
             },
         });
         videoElement.srcObject = stream; // Asigna el flujo al video

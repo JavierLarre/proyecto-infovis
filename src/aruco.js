@@ -11,7 +11,7 @@ function detectMarkers(imageData) {
 }
 
 // Assuming you have a video element to capture the video feed
-const video = document.getElementById('video');
+const video = document.getElementById('camara');
 
 // Capture the video frame and detect markers
 video.addEventListener('play', () => {
