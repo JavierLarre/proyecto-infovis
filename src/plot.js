@@ -3,8 +3,6 @@ import { layout } from './layout.js';
 import { annotations } from './annotations.js';
 import { SocialMedia } from './social_medias.js';
 import { SVGHandler } from './svg_handler.js';
-//import Protobject from './js/protobject.js'; // Importa el objeto Protobject para la comunicación
-
 
 
 var social_medias = [];

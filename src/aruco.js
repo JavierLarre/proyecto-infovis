@@ -14,7 +14,7 @@ function detectMarkers(imageData) {
 const video = document.getElementById('camara');
 
 // Capture the video frame and detect markers
-video.addEventListener('play', () => {
+video.addEventListener('loadedmetadata', () => {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     canvas.width = video.videoWidth;
