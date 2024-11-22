@@ -1,10 +1,9 @@
-import { plotData } from "./src/plot.js";
+import { plotData } from "./src/plot/plot.js";
 import { AR } from "./src/aruco/aruco.js";
 
 await plotData();
 
 const detector = new AR.Detector();
-console.log(detector);
 // Function to process the video frame and detect markers
 function detectMarkers(imageData) {
     const markers = detector.detect(imageData);

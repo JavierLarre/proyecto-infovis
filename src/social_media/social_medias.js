@@ -1,8 +1,8 @@
-export class SocialMedia {
+class SocialMedia {
     constructor(name, audio_path, icon_path, use_data_path, traceIndex) {
         this.plot_div = 'myDiv';
         this.image_div = 'svgContainer';
-        this.users_mill_path = "scripts/users_mill.json";
+        this.users_mill_path = "users_mill.json";
 
         this.name = name;
         this.icon_path = icon_path;
@@ -37,7 +37,7 @@ export class SocialMedia {
     placeImage(layout, x, y) {
         layout.images = layout.images || [];
         const hoverImage = {
-            source: this.icon_path,
+            source: `assets/imagenes/${this.icon_path}`,
             x: x,
             y: y,
             sizex: 0.1,
@@ -54,7 +54,7 @@ export class SocialMedia {
     }
     placeImageDiv() {
         this.image_element = document.createElement('img');
-        this.image_element.src = this.icon_path;
+        this.image_element.src = `assets/imagenes/${this.icon_path}`;
         this.image_element.className = 'image-on-hover';
         document.getElementById(this.image_div).appendChild(this.image_element);
     }
@@ -62,7 +62,7 @@ export class SocialMedia {
         document.getElementById(this.image_div).removeChild(this.image_element);
     }
     async createAudioPlayer() {
-        this.audio = await new Tone.Player(this.audio_path).toDestination();
+        this.audio = await new Tone.Player(`assets/sonidos/${this.audio_path}`).toDestination();
         this.audio.autostart = false;
         this.audio.loop = false;
         this.looper = new Tone.Loop((time) => this.playSound(time), 1);
@@ -78,7 +78,7 @@ export class SocialMedia {
         Tone.Transport.stop();
     }
     async loadData(path) {
-        const response = await fetch(path);
+        const response = await fetch(`assets/json/${path}`);
         const data = await response.json();
         return data;
     }
@@ -123,3 +123,16 @@ export class SocialMedia {
         this.stopLooper();
     }
 }
+
+export const social_medias = [
+    new SocialMedia(
+        'Facebook', 'facebook.wav', 'facebook.png', 'uso_facebook.json', 2
+    ),
+    new SocialMedia(
+        'Instagram', 'instagram.wav', 'instagram.png', 'uso_instagram.json', 3
+    ),
+    new SocialMedia(
+        'Twitter', 'twitter.wav', 'twitter.png', 'uso_twitter.json', 4
+    ),
+]
+await Promise.all(social_medias.map(sm => sm.initialize()));

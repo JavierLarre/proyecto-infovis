@@ -1,11 +1,13 @@
-export class SVGHandler {
+const DIV = 'svgContainer';
+
+class SVGHandler {
     constructor(div_id, file_path) {
         this.div = div_id;
         this.file_path = file_path;
         this.svg = null;
     }
     async loadSVG() {
-        fetch(this.file_path)
+        fetch(`assets/svg/${this.file_path}`)
             .then(response => response.text())
             .then(svgContent => {
                 const parser = new DOMParser();
@@ -49,4 +51,11 @@ export class SVGHandler {
 
         this.svg.appendChild(text);
     }
+}
+
+export async function loadSVG() {
+    const svgHandler = new SVGHandler(
+        DIV, 'cuadro_texto_oscuro.svg'
+    );
+    await svgHandler.loadSVG();
 }
