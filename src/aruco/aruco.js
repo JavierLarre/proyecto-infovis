@@ -3,9 +3,7 @@ import { AR } from "./lib/aruco.js";
 class Aruco {
     constructor() {
         this.detector = new AR.Detector();
-        
         this.markers = [];
-
         this.setupElements();
     }
 
@@ -17,16 +15,17 @@ class Aruco {
             .catch(err => {
                 console.error(err.name + ": " + err.message);
             });
-        this.video.addEventListener('play', () => {
-            this.canvas.width = this.video.videoWidth;
-            this.canvas.height = this.video.videoHeight;
-        });
     }
     
     setupElements() {
         this.video = document.getElementById('video');
         this.canvas = document.getElementById('canvas');
         this.context = this.canvas.getContext('2d');
+
+        this.video.addEventListener('play', () => {
+            this.canvas.width = this.video.videoWidth;
+            this.canvas.height = this.video.videoHeight;
+        });
     }
 
     snapshot() {
@@ -41,7 +40,9 @@ class Aruco {
     }
 
     getMarkers() {
-        return this.detector.detect(this.snapshot());
+        const markers = this.detector.detect(this.snapshot());
+        this.markers = markers;
+        return this.markers;
     }
 }
 
