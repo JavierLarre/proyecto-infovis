@@ -23,6 +23,7 @@ class Aruco {
             const video = this.video;
             const canvas = this.canvas;
             const context = this.context;
+            const markers = this.markers;
     
             function processFrame() {
                 if (video.paused || video.ended) {
@@ -31,7 +32,9 @@ class Aruco {
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
                 const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
     
-                console.log(new AR.Detector().detect(imageData));
+                new AR.Detector().detect(imageData).forEach(marker => {
+                    markers.push(marker);
+                });
                 requestAnimationFrame(processFrame);
             }
             processFrame();
@@ -57,7 +60,7 @@ class Aruco {
     }
 
     getMarkers() {
-        return this.detector.detect(this.snapshot());
+        return this.markers;
     }
 }
 
