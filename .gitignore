@@ -11,3 +11,4 @@ logs/
 # JavaScript package files
 package-lock.json
 package.json
+.vscode/
