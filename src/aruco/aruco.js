@@ -49,7 +49,7 @@ class Aruco {
 
     snapshot() {
         if (this.video.paused || this.video.ended) {
-            return;
+            return [];
         }
         const width = this.canvas.width;
         const height = this.canvas.height

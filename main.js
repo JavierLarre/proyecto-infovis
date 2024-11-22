@@ -4,3 +4,5 @@ import { aruco } from "./src/aruco/aruco.js";
 await plotData();
 
 aruco.start();
+
+console.log(aruco.getMarkers());
