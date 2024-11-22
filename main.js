@@ -6,5 +6,5 @@ await plotData();
 aruco.start();
 
 setInterval(() => {
-    console.log(aruco.markers);
-});
+    console.log(aruco.getMarkers());
+}, 1000);

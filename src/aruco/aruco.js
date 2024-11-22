@@ -20,25 +20,6 @@ class Aruco {
         this.video.addEventListener('play', () => {
             this.canvas.width = this.video.videoWidth;
             this.canvas.height = this.video.videoHeight;
-            const video = this.video;
-            const canvas = this.canvas;
-            const context = this.context;
-            this.markers = [];
-            const markers = this.markers;
-    
-            function processFrame() {
-                if (video.paused || video.ended) {
-                    return;
-                }
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    
-                new AR.Detector().detect(imageData).forEach(marker => {
-                    markers[0] = marker;
-                });
-                requestAnimationFrame(processFrame);
-            }
-            processFrame();
         });
     }
     
@@ -53,15 +34,14 @@ class Aruco {
             return [];
         }
         const width = this.canvas.width;
-        const height = this.canvas.height
-        this.context.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
-        const imageData = this.context.getImageData(0, 0, width, height);
-        console.log(imageData);
+        const height = this.canvas.height;
+        this.context.drawImage(this.video, 0, 0, width, height);
+        const imageData = this.context.getImageData(0, 0, width, width);
         return imageData;
     }
 
     getMarkers() {
-        return this.markers;
+        return this.detector.detect(this.snapshot());
     }
 }
 
