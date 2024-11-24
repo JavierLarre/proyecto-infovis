@@ -30,7 +30,7 @@ References:
 
 var CV = CV || {};
 
-// export { CV };
+export { CV };
 
 CV.Image = function(width, height, data){
   this.width = width || 0;

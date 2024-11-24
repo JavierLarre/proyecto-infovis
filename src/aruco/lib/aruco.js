@@ -26,11 +26,11 @@ References:
   http://www.uco.es/investiga/grupos/ava/node/26
 */
 
-// import { CV } from './cv.js';
+import { CV } from './cv.js';
 
 var AR = AR || {};
 
-// export { AR };
+export { AR };
 
 AR.Marker = function(id, corners){
   this.id = id;
