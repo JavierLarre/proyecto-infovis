@@ -1,4 +1,4 @@
-import { AR } from "./lib/aruco.js";
+// import { AR } from "./lib/aruco.js";
 
 class Aruco {
     constructor() {
