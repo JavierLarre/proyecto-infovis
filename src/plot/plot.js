@@ -3,7 +3,7 @@ import { layout } from './layout.js';
 import { annotations } from './annotations.js';
 import { social_medias } from '../social_media/social_medias.js';
 import { loadSVG } from '../svg/svg_handler.js';
-import { aruco } from "/src/aruco/aruco.js";
+// import { aruco } from "../aruco/aruco.js";
 
 var div = 'myDiv';
 let activeArucoMarkers = new Set(); // Conjunto para rastrear los marcadores Aruco activos
