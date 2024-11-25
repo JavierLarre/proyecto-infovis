@@ -74,12 +74,21 @@ function arucoEvent(marker) {
 
     activeArucoMarkers.add(id); // Marcar este ID como activo
 
+    // Determinar el año basado en el valor de x
+    const screenWidth = window.innerWidth; // Ancho de la pantalla
+    const numYears = 10; // 2014 a 2023
+    const minYear = 2014;
+
+    // Calcular el año correspondiente
+    const year = minYear + Math.floor((x / screenWidth) * numYears);
+
     const social_media = social_medias.find(sm => sm.name === socialMediaName);
     if (social_media) {
-        social_media.onHover(layout, x, y);
+        social_media.onHover(layout, year, y); // Usar el año calculado como coordenada x
         Plotly.relayout(div, { images: layout.images });
     }
 }
+
 
 function clearArucoMarkers() {
     if (activeArucoMarkers.size === 0) return;
@@ -113,7 +122,7 @@ function listenForArucoMarkers() {
                 arucoEvent(marker);
             });
         }
-    }, 100); // Verificar cada 100ms
+    }, 1000); // Verificar cada 100ms
 }
 
 export async function plotData() {
