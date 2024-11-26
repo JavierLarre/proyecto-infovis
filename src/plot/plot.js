@@ -122,7 +122,7 @@ function listenForArucoMarkers() {
                 arucoEvent(marker);
             });
         }
-    }, 1000); // Verificar cada 100ms
+    }, 5000); // Verificar cada 100ms
 }
 
 export async function plotData() {
