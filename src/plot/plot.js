@@ -7,6 +7,7 @@ import { aruco } from "../aruco/aruco.js";
 
 var div = 'myDiv';
 let activeArucoMarkers = new Set(); // Conjunto para rastrear los marcadores Aruco activos
+const video_capture_time = 100;
 
 function add_annotations_and_images_to_layout() {
     data.forEach(trace => {
@@ -40,6 +41,7 @@ function hoverEvent(eventData) {
 
     const point = eventData.points[0];
     const traceIndex = point.curveNumber;
+    console.log(`Hovered over point at x: ${point.x}, y: ${point.y}`);
     if (traceIndex < 2) 
         return;
     const social_media = social_medias[traceIndex - 2];
@@ -98,7 +100,11 @@ function clearArucoMarkers() {
     Plotly.relayout(div, { images: layout.images });
 
     // Asegurar que todos los elementos unHover sean activados
-    social_medias.forEach(sm => sm.unHover());
+    social_medias.forEach(sm => {
+        if (sm.playing) {
+            sm.unHover();
+        }
+    });
 }
 
 function listenForArucoMarkers() {
@@ -122,7 +128,7 @@ function listenForArucoMarkers() {
                 arucoEvent(marker);
             });
         }
-    }, 5000); // Verificar cada 100ms
+    }, video_capture_time); // Verificar cada 100ms
 }
 
 export async function plotData() {

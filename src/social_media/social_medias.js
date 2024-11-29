@@ -16,17 +16,23 @@ class SocialMedia {
         this.data = null;
         this.users_mill = null;
         this.trace = null;
-        
+        this.playing = false;
+        this.min_year = null;
     }
     async initialize() {
         const data = await this.loadData(this.use_data_path);
         this.data = data;
+        this.min_year = Math.min(...Object.keys(data));
         this.users_mill = await this.loadData(this.users_mill_path);
         this.cleanData();
         this.createTrace();
         await this.createAudioPlayer();
     }
+    validYear(year) {
+        return year >= this.min_year;
+    }
     playSound(time) {
+        console.log('playing sound');
         this.audio.start(time);
     }
     stopSound() {
@@ -70,12 +76,22 @@ class SocialMedia {
     startLooper(year) {
         this.looper.interval = this.data[year] / this.users_mill[year];
         this.looper.interval = (this.users_mill[year] / this.data[year]) + 1;
+        console.log('interal is NaN');
+        console.log(year);
+        console.log(this.data);
+        console.log(this.data[year]);
+        console.log(this.users_mill[year]); 
+        console.log(`starting looper with interval: ${this.looper.interval}`);
         Tone.Transport.start();
         this.looper.start(0);
+        this.playing = true;
     }
     stopLooper() {
+        console.log('stoping...');
         this.looper.stop(0);
         Tone.Transport.stop();
+        console.log('stoped!');
+        this.playing = false;
     }
     async loadData(path) {
         const response = await fetch(`assets/json/${path}`);
@@ -114,9 +130,11 @@ class SocialMedia {
         Plotly.restyle(this.plot_div, { 'line.width': 2, 'line.color': color }, [this.traceIndex]);
     }
     onHover(layout, x, y) {
-        this.highlightTrace();
-        this.placeImage(layout, 1.15, this.data[2023] / 100);
-        this.startLooper(x);
+        if (this.validYear(x)) {
+            this.highlightTrace();
+            this.placeImage(layout, 1.15, this.data[2023] / 100);
+            this.startLooper(x);
+        }
     }
     unHover() {
         this.unHighlightTrace();
