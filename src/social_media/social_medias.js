@@ -17,19 +17,30 @@ class SocialMedia {
         this.users_mill = null;
         this.trace = null;
         this.playing = false;
+        this.playing_year = null;
         this.min_year = null;
     }
     async initialize() {
         const data = await this.loadData(this.use_data_path);
         this.data = data;
         this.min_year = Math.min(...Object.keys(data));
+        console.log(`min year for ${this.name}: ${this.min_year}`);
         this.users_mill = await this.loadData(this.users_mill_path);
         this.cleanData();
         this.createTrace();
         await this.createAudioPlayer();
     }
     validYear(year) {
-        return year >= this.min_year;
+        console.log(`${this.min_year} <= ${year}`);
+        const is_valid = year >= this.min_year;
+        if (!is_valid) {
+            return false;
+        }
+        if (this.playing_year === year) {
+            return false;
+        }
+        this.playing_year = year;
+        return true;
     }
     playSound(time) {
         console.log('playing sound');
@@ -76,21 +87,14 @@ class SocialMedia {
     startLooper(year) {
         this.looper.interval = this.data[year] / this.users_mill[year];
         this.looper.interval = (this.users_mill[year] / this.data[year]) + 1;
-        console.log('interal is NaN');
-        console.log(year);
-        console.log(this.data);
-        console.log(this.data[year]);
-        console.log(this.users_mill[year]); 
         console.log(`starting looper with interval: ${this.looper.interval}`);
         Tone.Transport.start();
         this.looper.start(0);
         this.playing = true;
     }
     stopLooper() {
-        console.log('stoping...');
         this.looper.stop(0);
         Tone.Transport.stop();
-        console.log('stoped!');
         this.playing = false;
     }
     async loadData(path) {
@@ -117,10 +121,6 @@ class SocialMedia {
             hovertemplate: `Año: %{x}<br>Usuarios: %{y:.2f} <extra></extra>`
         }
     }
-    changeColor(color) {
-        this.trace.line.color = color;
-        Plotly.restyle(this.plot_div, { 'line.color': color }, [this.traceIndex]);
-    }
     highlightTrace() {
         const color = 'blue';
         Plotly.restyle(this.plot_div, { 'line.width': 4, 'line.color': color }, [this.traceIndex]);
@@ -137,8 +137,23 @@ class SocialMedia {
         }
     }
     unHover() {
+        console.log('unhover');
         this.unHighlightTrace();
         this.stopLooper();
+    }
+    getYearFrom(x) {
+        console.log(`getting year from ${x}`);
+        const years = Object.keys(this.data).length;
+        const ratio = window.innerWidth / years;
+        let i = 0;
+        for (let year in this.data) {
+            var left = i * ratio;
+            var right = (i + 1) * ratio;
+            if (x >= left && x < right) {
+                return this.min_year + i;
+            }
+            i++;
+        }
     }
 }
 

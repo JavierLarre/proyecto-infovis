@@ -75,32 +75,33 @@ function arucoEvent(marker) {
     if (!socialMediaName) return;
 
     activeArucoMarkers.add(id); // Marcar este ID como activo
-
-    // Determinar el año basado en el valor de x
-    const screenWidth = window.innerWidth; // Ancho de la pantalla
-    const numYears = 10; // 2014 a 2023
-    const minYear = 2014;
+    const social_media = social_medias.find(sm => sm.name === socialMediaName);
 
     // Calcular el año correspondiente
-    const year = minYear + Math.floor((x / screenWidth) * numYears);
+    const year = social_media.getYearFrom(x);
 
-    const social_media = social_medias.find(sm => sm.name === socialMediaName);
     if (social_media) {
         social_media.onHover(layout, year, y); // Usar el año calculado como coordenada x
-        Plotly.relayout(div, { images: layout.images });
     }
 }
 
 
 function clearArucoMarkers() {
+    const idToSocialMedia = {
+        1: 'Facebook',
+        2: 'Instagram',
+        3: 'Twitter'
+    };
     if (activeArucoMarkers.size === 0) return;
+    const social_media_names = Array.from(activeArucoMarkers).map(id => idToSocialMedia[id]);
+    const social_media = social_medias.filter(sm => social_media_names.includes(sm.name));
 
     activeArucoMarkers.clear(); // Limpiar todos los marcadores activos
     layout.images = [];
     Plotly.relayout(div, { images: layout.images });
 
     // Asegurar que todos los elementos unHover sean activados
-    social_medias.forEach(sm => {
+    social_media.forEach(sm => {
         if (sm.playing) {
             sm.unHover();
         }
@@ -128,7 +129,7 @@ function listenForArucoMarkers() {
                 arucoEvent(marker);
             });
         }
-    }, video_capture_time); // Verificar cada 100ms
+    }, video_capture_time);
 }
 
 export async function plotData() {
