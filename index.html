@@ -13,18 +13,16 @@
 
 <body>
     <script type="module" src="main.js"></script>
-    <div><strong>ARUCO DETECTADO EN:</strong></div>
-    <div id="aruco-detected"></div>
     <div class="center-div">
+        <div>
+            <center>
+                <video id="video" autoplay="true" style="display:none;"></video>
+                <canvas id="canvas"></canvas>
+            </center>
+        </div>
         <div id="myDiv" class="plotly-div"></div>
         <div id="svgContainer" class = "svgContainer">
         </div>
-    </div>
-    <div>
-        <center>
-            <video id="video" autoplay="true" style="display:none;"></video>
-            <canvas id="canvas"></canvas>
-        </center>
     </div>
     
 </body>

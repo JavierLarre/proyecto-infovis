@@ -31,7 +31,6 @@ class SocialMedia {
         await this.createAudioPlayer();
     }
     validYear(year) {
-        console.log(`${this.min_year} <= ${year}`);
         const is_valid = year >= this.min_year;
         if (!is_valid) {
             return false;
@@ -43,7 +42,6 @@ class SocialMedia {
         return true;
     }
     playSound(time) {
-        console.log('playing sound');
         this.audio.start(time);
     }
     stopSound() {
@@ -87,7 +85,6 @@ class SocialMedia {
     startLooper(year) {
         this.looper.interval = this.data[year] / this.users_mill[year];
         this.looper.interval = (this.users_mill[year] / this.data[year]) + 1;
-        console.log(`starting looper with interval: ${this.looper.interval}`);
         Tone.Transport.start();
         this.looper.start(0);
         this.playing = true;
@@ -137,12 +134,10 @@ class SocialMedia {
         }
     }
     unHover() {
-        console.log('unhover');
         this.unHighlightTrace();
         this.stopLooper();
     }
     getYearFrom(x) {
-        console.log(`getting year from ${x}`);
         const years = Object.keys(this.data).length;
         const ratio = window.innerWidth / years;
         let i = 0;

@@ -41,7 +41,6 @@ function hoverEvent(eventData) {
 
     const point = eventData.points[0];
     const traceIndex = point.curveNumber;
-    console.log(`Hovered over point at x: ${point.x}, y: ${point.y}`);
     if (traceIndex < 2) 
         return;
     const social_media = social_medias[traceIndex - 2];
@@ -114,7 +113,11 @@ function listenForArucoMarkers() {
     setInterval(() => {
         const markers = aruco.getMarkers();
 
-        if (!Array.isArray(markers) || markers.length === 0) {
+        if (!Array.isArray(markers)) {
+            return;
+        }
+
+        if (markers.length === 0) {
             // Si no hay marcadores, limpiar estado
             clearArucoMarkers();
             return;

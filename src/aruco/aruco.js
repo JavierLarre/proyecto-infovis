@@ -42,17 +42,8 @@ class Aruco {
     getMarkers() {
         const imageData = this.snapshot();
 
-        // Validar si se obtuvo imagen
-        if (!imageData) {
-            console.warn("No image data available for marker detection.");
-            return [];
-        }
-
         // Detectar los marcadores en la imagen
         const detectedMarkers = this.detector.detect(imageData);
-        if (!Array.isArray(detectedMarkers) || detectedMarkers.length === 0) {
-            return []; // Si no se detectan marcadores, devuelve una lista vacía.
-        }
 
         // Procesar los marcadores para devolverlos en el formato deseado
         const markers = detectedMarkers.map(marker => {
