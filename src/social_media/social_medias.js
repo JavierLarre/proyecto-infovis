@@ -136,6 +136,7 @@ class SocialMedia {
     unHover() {
         this.unHighlightTrace();
         this.stopLooper();
+        this.playing_year = null;
     }
     getYearFrom(x) {
         const years = Object.keys(this.data).length;
